@@ -1,0 +1,32 @@
+@import url('public.css');
+
+.body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+
+.title {
+    font-size: 30px;
+    color: var(--main-color);
+}
+
+.kakao-button {
+    background-color: var(--main-color);
+    font-size: 18px;
+    color: var(--white);
+    padding: 0px 20px;
+    border-radius: 50px;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 243px;
+    height: 37px;
+    margin-top: 20px;
+}

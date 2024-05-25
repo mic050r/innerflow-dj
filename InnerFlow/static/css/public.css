@@ -1,0 +1,21 @@
+@import url("../fonts/font.css");
+
+:root {
+    --main-color: #734ceb;
+    --secondary-color: #C8B8FA;
+    --third-color: #F4F1FE;
+    --forth-color: #CDE8E5;
+    --black: #000;
+    --gray1: #7B7B7B;
+    --gray2: #808080;
+    --gray3: #A9ABB8;
+    --gray4: #D7D7D7;
+    --white: #FFF;
+    --main-font: 'Pretendard-Regular';
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: var(--main-font);
+}
