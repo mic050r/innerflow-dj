@@ -15,11 +15,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 from InnerFlow import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
+    path('signup/', views.signup_view, name='signup'),  # 회원가입 URL 패턴
+    path('login/', views.login_view, name='login'),  # 로그인 URL 패턴
+    path('logout/', views.logout_view, name='logout'),  # 로그아웃 URL 패턴
 ]
