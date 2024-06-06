@@ -19,3 +19,7 @@
     padding: 0;
     font-family: var(--main-font);
 }
+
+a {
+    text-decoration-line: none;
+}

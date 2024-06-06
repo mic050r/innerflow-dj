@@ -17,6 +17,7 @@
 
 .kakao-button {
     background-color: var(--main-color);
+    text-decoration: none;  /* 링크의 밑줄 없애기 */
     font-size: 18px;
     color: var(--white);
     padding: 0px 20px;

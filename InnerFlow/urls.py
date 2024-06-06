@@ -22,7 +22,7 @@ from InnerFlow import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
-    path('signup/', views.signup_view, name='signup'),  # 회원가입 URL 패턴
-    path('login/', views.login_view, name='login'),  # 로그인 URL 패턴
-    path('logout/', views.logout_view, name='logout'),  # 로그아웃 URL 패턴
+    path('kakao/login/', views.kakao_login, name='kakao_login'),
+    path('kakao/login/callback/', views.kakao_callback, name='kakao_callback'),
+    path('home/', views.home, name='home')
 ]
