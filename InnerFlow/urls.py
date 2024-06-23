@@ -21,8 +21,9 @@ from InnerFlow import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('home/', views.home, name='home'),
     path('', views.index, name='index'),
     path('kakao/login/', views.kakao_login, name='kakao_login'),
     path('kakao/login/callback/', views.kakao_callback, name='kakao_callback'),
-    path('home/', views.home, name='home')
+    path('check-session/', views.check_session, name='check_session'),  # 세션 확인
 ]
