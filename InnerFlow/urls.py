@@ -15,8 +15,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
+from InnerFlow import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('home/', views.home, name='home'),
+    path('', views.index, name='index'),
+    path('kakao/login/', views.kakao_login, name='kakao_login'),
+    path('kakao/login/callback/', views.kakao_callback, name='kakao_callback'),
+    path('check-session/', views.check_session, name='check_session'),  # 세션 확인
 ]
