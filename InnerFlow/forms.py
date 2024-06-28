@@ -1,5 +1,5 @@
 from django import forms
-from .models import Board, Comment, Goal, Todo
+from .models import Board, Comment, Goal, Todo, Achievement, Praise
 
 
 class BoardForm(forms.ModelForm):
@@ -21,3 +21,13 @@ class TodoForm(forms.ModelForm):
     class Meta:
         model = Todo
         fields = ['todo']
+
+class AchievementForm(forms.ModelForm):
+    class Meta:
+        model = Achievement
+        fields = ['title', 'date', 'keyword', 'temperature', 'content']
+
+class PraiseForm(forms.ModelForm):
+    class Meta:
+        model = Praise
+        fields = ['content']
