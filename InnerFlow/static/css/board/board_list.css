@@ -1,0 +1,144 @@
+@import url('../public.css');
+
+.sub-title {
+    color: var(--gray3);
+}
+
+.container {
+    margin-top: 3%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    width: 80%;
+    text-align: left;
+    margin-bottom: 3%;
+}
+
+.search-filter {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 15px;
+    padding-left: 2%;
+}
+
+.search-filter input[type="text"] {
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.search-filter a {
+    margin-bottom: 10px;
+    padding: 5px 0;
+    color: var(--gray2);
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    width: fit-content;
+}
+
+.search-filter a:hover {
+    color: var(--main-color);
+}
+
+.search-filter .btn {
+    width: 80%;
+    height: 30px; /* 높이 설정 */
+    background-color: var(--main-color);
+    color: var(--white);
+    text-align: center;
+    align-content: center;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 수평 및 수직 가운데 정렬 */
+}
+
+.search-filter .btn:hover {
+    background-color: var(--main-color);
+    color: var(--white);
+}
+
+.search-filter a.active {
+    position: relative; /* 밑줄 위치 조정을 위한 상대적 위치 설정 */
+    padding-bottom: 3px; /* 텍스트와 밑줄 사이의 간격 조정 */
+    font-weight: bold;
+    color: var(--main-color);
+}
+
+.search-filter a.active::after {
+    content: ''; /* 가상 요소 추가 */
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px; /* 밑줄 굵기 */
+    background-color: var(--main-color); /* 밑줄 색상 */
+    width: 100%;
+    transform: translateY(1px); /* 밑줄을 텍스트에서 조금 떨어지게 */
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.left-content {
+    width: 18%;
+}
+
+.right-content {
+    width: 80%;
+}
+
+.right-content ul {
+    list-style: none;
+    padding: 0;
+    border-top: 1px solid var(--gray4); /* 리스트 항목의 선을 맨 처음부터 나오게 설정 */
+}
+
+.right-content li {
+    border-bottom: 1px solid var(--gray4);
+    padding: 10px 0;
+}
+
+.board-details {
+    margin-top: 20px;
+}
+
+.board-details h2 {
+    margin-bottom: 10px;
+}
+
+.board-details p {
+    margin-bottom: 10px;
+}
+
+.board-details form {
+    display: inline;
+    margin-right: 10px;
+}
+
+.board-details hr {
+    margin: 20px 0;
+}
+
+.board-details ul {
+    list-style: none;
+    padding: 0;
+}
+
+.board-details li {
+    margin-bottom: 10px;
+}
+
+.board-details li form {
+    display: inline;
+    margin-left: 10px;
+}

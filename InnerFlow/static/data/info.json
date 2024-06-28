@@ -1,0 +1,37 @@
+[
+    {
+        "img": "/static/images/info-card1.png",
+        "link": "https://www.robertwalters.co.kr/insights/career-advice/blog/dealing-with-imposter-syndrome.html",
+        "tag": "가면 증후군"
+    },
+    {
+        "img": "/static/images/info-card2.png",
+        "link": "https://asana.com/ko/resources/impostor-syndrome",
+        "tag": "극복"
+    },
+    {
+        "img": "/static/images/info-card3.png",
+        "link": "https://www.youtube.com/watch?v=B2LE3ObqN6A",
+        "tag": "자기성장"
+    },
+    {
+        "img": "/static/images/info-card4.png",
+        "link": "https://product.kyobobook.co.kr/detail/S000001953705",
+        "tag": "독서추천"
+    },
+    {
+        "img": "/static/images/info-card5.png",
+        "link": "https://www.youtube.com/watch?v=Gj8xkUqdmrc&pp=ygUW6rCA66m07Kad7ZuE6rWwIOq3ueuztQ%3D%3D",
+        "tag": "극복"
+    },
+    {
+        "img": "/static/images/info-card6.png",
+        "link": "https://www.youtube.com/watch?v=fuuy0jJgnpY&pp=ygUW6rCA66m07Kad7ZuE6rWwIOq3ueuztQ%3D%3D",
+        "tag": "가면 증후군"
+    },
+    {
+        "img": "/static/images/info-card1.png",
+        "link": "https://www.youtube.com/watch?v=g8hFpR1D5S0&pp=ygUW6rCA66m07Kad7ZuE6rWwIOq3ueuztQ%3D%3D",
+        "tag": "가면 증후군"
+    }
+]
