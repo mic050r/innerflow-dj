@@ -43,5 +43,29 @@
   </div>
 </div>
 
+<footer>
+    <ul>
+        <li>
+            <a href="{% url 'home' %}" id="home-link">
+                <img src="{% static 'images/home.svg' %}" alt="Home" id="home-icon">
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'daily_log' %}" id="journal-link">
+                <img src="{% static 'images/journal.svg' %}" alt="Journal" id="journal-icon">
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'goal_list' %}" id="goal-link">
+                <img src="{% static 'images/goal.svg' %}" alt="Goal" id="goal-icon">
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'board_list' %}" id="board-link">
+                <img src="{% static 'images/board-active.svg' %}" alt="Board" id="board-icon">
+            </a>
+        </li>
+    </ul>
+</footer>
 </body>
 </html>

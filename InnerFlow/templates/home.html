@@ -7,42 +7,6 @@
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 <body>
-<style>
-    footer {
-        color: white;
-        text-align: center;
-        padding: 10px 0;
-        position: fixed;
-        width: 100%;
-        bottom: 0;
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
-    }
-
-    footer ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-    }
-
-    footer ul li {
-        margin: 0 3%;
-    }
-
-    footer ul li a {
-        display: inline-block;
-        width: 24px;
-        height: 24px;
-        background-size: contain;
-    }
-
-    footer ul li a img {
-        width: 24px;
-        height: 24px;
-    }
-
-</style>
 {# 헤더 #}
 <section class="top-container">
     <p class="title">임지현님, 반가워요</p>
@@ -101,11 +65,26 @@
 
 <footer>
     <ul>
-        <li><a href="#" id="goal-link"><img src="{% static 'images/home-active.svg' %}" alt="Goal" id="goal-icon"></a></li>
-        <li><a href="#" id="home-link"><img src="{% static 'images/journal.svg' %}" alt="Home" id="home-icon"></a></li>
-        <li><a href="#" id="journal-link"><img src="{% static 'images/goal.svg' %}" alt="Journal" id="journal-icon"></a>
+        <li>
+            <a href="{% url 'home' %}" id="home-link">
+                <img src="{% static 'images/home-active.svg' %}" alt="Home" id="home-icon">
+            </a>
         </li>
-        <li><a href="#" id="board-link"><img src="{% static 'images/board.svg' %}" alt="Board" id="board-icon"></a></li>
+        <li>
+            <a href="{% url 'daily_log' %}" id="journal-link">
+                <img src="{% static 'images/journal.svg' %}" alt="Journal" id="journal-icon">
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'goal_list' %}" id="goal-link">
+                <img src="{% static 'images/goal.svg' %}" alt="Goal" id="goal-icon">
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'board_list' %}" id="board-link">
+                <img src="{% static 'images/board.svg' %}" alt="Board" id="board-icon">
+            </a>
+        </li>
     </ul>
 </footer>
 

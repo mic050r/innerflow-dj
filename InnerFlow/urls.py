@@ -43,6 +43,7 @@ urlpatterns = [
     path('comments/<int:comment_id>/update/', views.comment_update, name='comment_update'),
     path('comments/<int:comment_id>/delete/', views.comment_delete, name='comment_delete'),
 
+    # 목표 설정
     path('goal/', views.goal_list, name='goal_list'),
     path('goal/create/', views.goal_create, name='goal_create'),
     path('goal/<int:goal_id>/update/', views.goal_update, name='goal_update'),
@@ -52,6 +53,7 @@ urlpatterns = [
     path('todo/<int:todo_id>/delete/', views.todo_delete, name='todo_delete'),
     path('todo/<int:todo_id>/update_checked/', views.update_checked, name='update_checked'),
 
+    # 성취일지 & 칭찬일지
     path('daily-log/', views.daily_log, name='daily_log'),
     path('delete-praise/<int:praise_id>/', views.delete_praise, name='delete_praise'),
     path('achievement/<str:date>/', views.achievement_form, name='achievement_form'),

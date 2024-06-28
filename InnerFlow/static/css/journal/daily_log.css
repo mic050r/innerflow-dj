@@ -82,37 +82,4 @@ li form {
 }
 
 
-footer {
-    background-color: var(--white);
-    text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
-}
-
-footer ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-}
-
-footer ul li {
-    margin: 0 3%;
-}
-
-footer ul li a {
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    background-size: contain;
-}
-
-footer ul li a img {
-    width: 30px;
-    height: 30px;
-}
 
