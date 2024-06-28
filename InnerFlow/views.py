@@ -1,5 +1,5 @@
 import os
-
+import json
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import JsonResponse
@@ -19,7 +19,10 @@ def index(request):
     return render(request, 'index.html')
 
 def home(request):
-    return render(request, 'home.html')
+    with open('./InnerFlow/static/data/info.json', 'r', encoding='utf-8') as file:
+        data = json.load(file)
+    print(data)
+    return render(request, 'home.html', {'data': json.dumps(data)})
 
 
 # 카카오 로그인 페이지로 리다이렉트하는 함수
