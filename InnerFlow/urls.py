@@ -51,4 +51,9 @@ urlpatterns = [
     path('todo/<int:todo_id>/update/', views.todo_update, name='todo_update'),
     path('todo/<int:todo_id>/delete/', views.todo_delete, name='todo_delete'),
     path('todo/<int:todo_id>/update_checked/', views.update_checked, name='update_checked'),
+
+    path('daily-log/', views.daily_log, name='daily_log'),
+    path('delete-praise/<int:praise_id>/', views.delete_praise, name='delete_praise'),
+    path('achievement/<str:date>/', views.achievement_form, name='achievement_form'),
+    path('achievement/<int:achievement_id>/', views.achievement_detail, name='achievement_detail'),
 ]

@@ -18,8 +18,8 @@ from django.views.decorators.http import require_POST
 from dotenv import load_dotenv
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from InnerFlow.forms import BoardForm, CommentForm, TodoForm, GoalForm
-from InnerFlow.models import User, Board, Comment, Todo, Goal
+from InnerFlow.forms import BoardForm, CommentForm, TodoForm, GoalForm, AchievementForm, PraiseForm
+from InnerFlow.models import User, Board, Comment, Todo, Goal, Achievement, Praise
 
 # 로거 인스턴스 생성
 logger = logging.getLogger(__name__)
@@ -363,3 +363,56 @@ def todo_delete(request, todo_id):
         todo.delete()
         return redirect('todo_list', goal_id=goal_id)
     return render(request, 'goal/todo_confirm_delete.html', {'todo': todo})
+
+
+def daily_log(request):
+    kakao_id = request.session.get('kakao_id')
+    praises = Praise.objects.filter(user__kakao_id=kakao_id).order_by('-created_at')
+    achievements = Achievement.objects.filter(user__kakao_id=kakao_id)
+    praise_form = PraiseForm()
+
+    if request.method == 'POST':
+        praise_form = PraiseForm(request.POST)
+        if praise_form.is_valid():
+            praise = praise_form.save(commit=False)
+            praise.user = User.objects.get(kakao_id=kakao_id)
+            praise.save()
+            return redirect('daily_log')
+
+    return render(request, 'journal/daily_log.html', {
+        'praise_form': praise_form,
+        'praises': praises,
+        'achievements': achievements
+    })
+
+
+
+
+def delete_praise(request, praise_id):
+    kakao_id = request.session.get('kakao_id')
+    praise = get_object_or_404(Praise, id=praise_id, user__kakao_id=kakao_id)
+    if request.method == 'POST':
+        praise.delete()
+        return redirect('daily_log')
+
+
+def achievement_form(request, date):
+    kakao_id = request.session.get('kakao_id')
+    achievement = Achievement.objects.filter(user__kakao_id=kakao_id, date=date).first()
+    if request.method == 'POST':
+        form = AchievementForm(request.POST, instance=achievement)
+        if form.is_valid():
+            achievement = form.save(commit=False)
+            achievement.user = User.objects.get(kakao_id=kakao_id)
+            achievement.save()
+            return redirect('daily_log')
+    else:
+        form = AchievementForm(instance=achievement)
+
+    return render(request, 'journal/achievement_form.html', {'form': form, 'date': date})
+
+
+def achievement_detail(request, achievement_id):
+    kakao_id = request.session.get('kakao_id')
+    achievement = get_object_or_404(Achievement, id=achievement_id, user__kakao_id=kakao_id)
+    return render(request, 'journal/achievement_detail.html', {'achievement': achievement})

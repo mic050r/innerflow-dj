@@ -1,0 +1,53 @@
+<!-- templates/daily_log.html -->
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Daily Log</title>
+    <!-- FullCalendar CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                plugins: [ 'dayGrid' ],
+                initialView: 'dayGridMonth',
+                events: [
+                    {% for achievement in achievements %}
+                    {
+                        title: '{{ achievement.title }}',
+                        start: '{{ achievement.date }}',
+                        url: '{% url 'achievement_detail' achievement.id %}'
+                    },
+                    {% endfor %}
+                ],
+                dateClick: function(info) {
+                    window.location.href = '{% url 'achievement_form' 'date_placeholder' %}'.replace('date_placeholder', info.dateStr);
+                }
+            });
+            calendar.render();
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Daily Log</h1>
+        <div id="calendar" style="max-width: 900px; margin: 40px auto;"></div>
+        <div class="praise-section">
+            <h2>Praises</h2>
+            <form method="post" action="">
+                {% csrf_token %}
+                {{ praise_form.as_p }}
+                <button type="submit">Add Praise</button>
+            </form>
+            <ul>
+                {% for praise in praises %}
+                <li>{{ praise.content }} <form method="post" action="{% url 'delete_praise' praise.id %}" style="display:inline;">{% csrf_token %}<button type="submit">X</button></form></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
