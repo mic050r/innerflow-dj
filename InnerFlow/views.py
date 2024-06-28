@@ -126,10 +126,26 @@ def board_list(request):
         boards = Board.objects.all()
     return render(request, 'board_list.html', {'boards': boards})
 
+
 def board_detail(request, board_id):
-    board = get_object_or_404(Board, board_id=board_id)
+    board = get_object_or_404(Board, pk=board_id)
     comments = Comment.objects.filter(board=board)
-    return render(request, 'board_detail.html', {'board': board, 'comments': comments})
+
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.board = board
+            comment.save()
+            return redirect('board_detail', board_id=board.id)
+    else:
+        form = CommentForm()
+
+    return render(request, 'board_detail.html', {
+        'board': board,
+        'comments': comments,
+        'form': form
+    })
 
 def board_filter(request, filter_type):
     kakao_id = request.session.get('kakao_id')

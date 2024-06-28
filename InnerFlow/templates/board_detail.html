@@ -1,26 +1,46 @@
-{% extends "base_generic.html" %}
-
-{% block content %}
-  <h2>{{ board.title }}</h2>
-  <p>{{ board.content }}</p>
-  <p>Created at: {{ board.created_at }}</p>
-  <a href="{% url 'board_update' board.board_id %}">Edit</a>
-  <form action="{% url 'board_delete' board.board_id %}" method="post">
-    {% csrf_token %}
-    <button type="submit">Delete</button>
-  </form>
-  <hr>
-  <h3>Comments</h3>
-  <ul>
-    {% for comment in comments %}
-      <li>{{ comment.comment }} - {{ comment.created_at }}
-        <a href="{% url 'comment_update' comment.comment_id %}">Edit</a>
-        <form action="{% url 'comment_delete' comment.comment_id %}" method="post">
-          {% csrf_token %}
-          <button type="submit">Delete</button>
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Site</title>
+<link rel="stylesheet" href="{% static 'css/board/board_detail.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'board_list' %}">Boards</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>{{ board.title }}</h2>
+        <p>{{ board.content }}</p>
+        <p>Created at: {{ board.created_at }}</p>
+        <a href="{% url 'board_update' board.board_id %}">Edit</a>
+        <form action="{% url 'board_delete' board.board_id %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Delete</button>
         </form>
-      </li>
-    {% endfor %}
-  </ul>
-  <a href="{% url 'comment_create' board.board_id %}">Add a comment</a>
-{% endblock %}
+        <hr>
+        <h3>Comments</h3>
+        <h2>{{ form.instance.pk|yesno:"Edit,Add" }} Comment</h2>
+        <form method="post" action="{% url 'comment_create' board.board_id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save</button>
+        </form>
+        <ul>
+            {% for comment in comments %}
+            <li>{{ comment.comment }}
+                <a href="{% url 'comment_update' comment.comment_id %}">Edit</a>
+                <form action="{% url 'comment_delete' comment.comment_id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    </main>
+</body>
+</html>
