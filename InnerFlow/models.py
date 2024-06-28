@@ -79,3 +79,17 @@ class Todo(models.Model):
     goal = models.ForeignKey(Goal, on_delete=models.CASCADE)
     todo = models.CharField(max_length=255)
     checked = models.BooleanField(default=False)
+
+class Achievement(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    date = models.DateField()
+    keyword = models.CharField(max_length=255)
+    temperature = models.IntegerField()
+    content = models.TextField()
+    created_at = models.DateField(auto_now_add=True)
+
+class Praise(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.CharField(max_length=255)
+    created_at = models.DateField(auto_now_add=True)

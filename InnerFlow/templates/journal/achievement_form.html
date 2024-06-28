@@ -1,0 +1,22 @@
+<!-- journal/templates/journal/achievement_form.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Achievement Form</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+    <h1>Achievement Form for {{ date }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr("input[type='date']", {
+            dateFormat: "Y-m-d",
+        });
+    </script>
+</body>
+</html>
