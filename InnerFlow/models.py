@@ -67,3 +67,15 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.comment
+
+class Goal(models.Model):
+    goal_id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    goal = models.CharField(max_length=255)
+    created_at = models.DateField(auto_now_add=True)
+
+class Todo(models.Model):
+    todo_id = models.AutoField(primary_key=True)
+    goal = models.ForeignKey(Goal, on_delete=models.CASCADE)
+    todo = models.CharField(max_length=255)
+    checked = models.BooleanField(default=False)
