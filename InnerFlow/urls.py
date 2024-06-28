@@ -56,4 +56,5 @@ urlpatterns = [
     path('delete-praise/<int:praise_id>/', views.delete_praise, name='delete_praise'),
     path('achievement/<str:date>/', views.achievement_form, name='achievement_form'),
     path('achievement/<int:achievement_id>/', views.achievement_detail, name='achievement_detail'),
+    path('events/', views.events, name='events'),
 ]

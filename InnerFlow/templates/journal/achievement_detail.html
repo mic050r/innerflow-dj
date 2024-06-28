@@ -1,15 +1,12 @@
-<!-- templates/achievement_detail.html -->
-
+<!-- journal/templates/journal/achievement_detail.html -->
 <!DOCTYPE html>
 <html>
 <head>
     <title>Achievement Detail</title>
 </head>
 <body>
-    <div class="container">
-        <h1>{{ achievement.title }}</h1>
-        <p>{{ achievement.content }}</p>
-        <a href="{% url 'achievement_form' achievement.date %}">Edit</a>
-    </div>
+    <h1>{{ achievement.title }}</h1>
+    <p>{{ achievement.description }}</p>
+    <a href="{% url 'achievement_form' achievement.date %}">Edit</a>
 </body>
 </html>

@@ -1,18 +1,15 @@
-<!-- templates/achievement_form.html -->
-
+<!-- journal/templates/journal/achievement_form.html -->
 <!DOCTYPE html>
 <html>
 <head>
     <title>Achievement Form</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Achievement for {{ date }}</h1>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Save Achievement</button>
-        </form>
-    </div>
+    <h1>Achievement Form for {{ date }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
 </body>
 </html>

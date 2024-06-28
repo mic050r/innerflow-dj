@@ -385,16 +385,12 @@ def daily_log(request):
         'achievements': achievements
     })
 
-
-
-
 def delete_praise(request, praise_id):
     kakao_id = request.session.get('kakao_id')
     praise = get_object_or_404(Praise, id=praise_id, user__kakao_id=kakao_id)
     if request.method == 'POST':
         praise.delete()
         return redirect('daily_log')
-
 
 def achievement_form(request, date):
     kakao_id = request.session.get('kakao_id')
@@ -411,8 +407,20 @@ def achievement_form(request, date):
 
     return render(request, 'journal/achievement_form.html', {'form': form, 'date': date})
 
-
 def achievement_detail(request, achievement_id):
     kakao_id = request.session.get('kakao_id')
     achievement = get_object_or_404(Achievement, id=achievement_id, user__kakao_id=kakao_id)
     return render(request, 'journal/achievement_detail.html', {'achievement': achievement})
+
+def events(request):
+    kakao_id = request.session.get('kakao_id')
+    achievements = Achievement.objects.filter(user__kakao_id=kakao_id)
+    events = []
+    for achievement in achievements:
+        events.append({
+            'id': achievement.id,
+            'title': achievement.title,
+            'start': achievement.date.isoformat(),
+            'end': achievement.date.isoformat(),
+        })
+    return JsonResponse(events, safe=False)
