@@ -1,0 +1,142 @@
+@import url('../public.css');
+
+.container {
+    width: 80%;
+    /*max-width: 800px;*/
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.header {
+    width: 80%;
+    text-align: left;  /* 왼쪽 정렬 */
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 30px;
+    color: #333;
+}
+
+.header .sub-title {
+    margin: 0;
+    font-size: 16px;
+    color: var(--gray3);
+}
+
+.btn {
+    background-color: var(--white);
+    margin-left: 98%;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 1%;
+}
+
+.button-icon {
+    width: 30px;  /* 아이콘 크기 조정 */
+    height: 30px;  /* 아이콘 크기 조정 */
+}
+
+.content {
+    width: 100%;
+}
+
+.goal-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.goal-item {
+    cursor: pointer;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    width: calc(50% - 10px);
+    box-sizing: border-box;
+}
+
+.goal-text {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.goal-progress {
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+    height: 20px;
+    margin-bottom: 5px;
+}
+
+.progress {
+    background-color: #76c7c0;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.progress-text {
+    font-size: 14px;
+    color: var(--gray2);
+}
+
+.goal-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.goal-actions a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.goal-actions a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+footer ul li {
+    margin: 0 3%;
+}
+
+footer ul li a {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+}
+
+footer ul li a img {
+    width: 30px;
+    height: 30px;
+}
+
+

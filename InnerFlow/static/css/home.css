@@ -1,0 +1,88 @@
+@import url('public.css');
+
+.body {
+    display: flex;
+    flex-direction: column;
+}
+
+.top-container {
+    padding-top: 2%;
+    padding-bottom: 2%;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    margin: 0;
+}
+
+/* top */
+.title {
+    font-size: 30px;
+}
+
+.sub-title {
+    font-size: 20px;
+    color: var(--gray3);
+}
+
+/* info */
+.info-container {
+     background-color: rgba(200, 184, 250, 0.4); /* 투명도 40% 적용 */
+    width: 100%;
+}
+
+.info-group {
+    display: flex;
+    flex-direction: column; /* info-group 내부 요소들을 세로로 정렬 */
+}
+
+.info-tag {
+    display: flex;
+    gap: 10px; /* 요소들 사이에 간격 추가 */
+    margin-bottom: 20px; /* 하단에 여백 추가 */
+}
+
+.info-tag {
+    display: flex;
+    margin: 2%;
+    gap: 3%; /* 요소들 사이에 간격 추가 */
+    margin-bottom: 20px; /* 하단에 여백 추가 */
+    cursor: pointer;
+}
+
+.info-tag p.active {
+    position: relative; /* 밑줄 위치 조정을 위한 상대적 위치 설정 */
+    padding-bottom: 3px; /* 텍스트와 밑줄 사이의 간격 조정 */
+}
+
+.info-tag p.active::after {
+    content: ''; /* 가상 요소 추가 */
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px; /* 밑줄 굵기 */
+    background-color: var(--main-color); /* 밑줄 색상 */
+    transform: translateY(1px); /* 밑줄을 텍스트에서 조금 떨어지게 */
+}
+
+/* my achievement */
+.main {
+    justify-content: center;
+    width: 70%;
+}
+
+.home-title {
+    font-size: 20px;
+}
+
+.achievement-group {
+    margin-left: 5%;
+}
+
+.achievement-tag {
+    color: var(--main-color);
+    color: var(--white);
+    border-radius: 20px;
+}
+
+

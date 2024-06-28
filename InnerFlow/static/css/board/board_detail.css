@@ -1,0 +1,123 @@
+@import url('../public.css');
+
+header nav ul {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: left;
+}
+
+main {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* 게시판 디테일 섹션 스타일 */
+main h2 {
+    margin-top: 0;
+}
+
+main p {
+    margin: 10px 0;
+}
+
+main p:first-of-type {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+main p:nth-of-type(2) {
+    color: #555;
+}
+
+form {
+    display: inline;
+}
+
+form button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+form button:hover {
+    background-color: #d32f2f;
+}
+
+/* 댓글 섹션 스타일 */
+hr {
+    border: 1px solid #ddd;
+    margin: 20px 0;
+}
+
+h3 {
+    margin-bottom: 10px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+form input, form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+form button[type="submit"] {
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+form button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* 댓글 목록 스타일 */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+ul li a {
+    color: #2196F3;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+ul li a:hover {
+    text-decoration: underline;
+}
+
+ul li form {
+    display: inline;
+}
+
+ul li form button {
+    color: black;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+ul li form button:hover {
+    background-color: #d32f2f;
+}

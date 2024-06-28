@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Todo</title>
+</head>
+<body>
+    <h2>Delete Todo</h2>
+    <form method="post">
+        {% csrf_token %}
+        <p>Are you sure you want to delete this todo?</p>
+        <button type="submit">Yes, delete</button>
+    </form>
+</body>
+</html>

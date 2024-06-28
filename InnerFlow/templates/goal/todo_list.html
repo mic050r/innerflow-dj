@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ goal.goal }}</title>
+</head>
+<body>
+    <h2>{{ goal.goal }}</h2>
+    <ul>
+        {% for todo in todos %}
+            <li>
+                {{ todo.todo }}
+                <input type="checkbox" {% if todo.checked %}checked{% endif %} onclick="updateChecked({{ todo.todo_id }}, this.checked)">
+                <a href="{% url 'todo_update' todo.todo_id %}">Edit</a>
+                <a href="{% url 'todo_delete' todo.todo_id %}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Todo</button>
+    </form>
+
+    <script>
+        function updateChecked(todoId, checked) {
+            fetch(`/todo/${todoId}/update_checked/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ checked: checked })
+            }).then(response => {
+                if (!response.ok) {
+                    alert('Failed to update checked status');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
