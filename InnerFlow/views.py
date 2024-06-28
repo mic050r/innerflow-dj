@@ -4,6 +4,7 @@ from venv import logger
 import logging
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
+from django.db.models import Q
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import JsonResponse, HttpResponseForbidden
@@ -118,15 +119,30 @@ def check_session(request):
 
    
 def board_list(request):
-    boards = Board.objects.all()
+    query = request.GET.get('q')
+    if query:
+        boards = Board.objects.filter(Q(title__icontains=query) | Q(content__icontains=query))
+    else:
+        boards = Board.objects.all()
     return render(request, 'board_list.html', {'boards': boards})
 
-   
 def board_detail(request, board_id):
     board = get_object_or_404(Board, board_id=board_id)
     comments = Comment.objects.filter(board=board)
     return render(request, 'board_detail.html', {'board': board, 'comments': comments})
 
+def board_filter(request, filter_type):
+    kakao_id = request.session.get('kakao_id')
+    if filter_type == 'all':
+        boards = Board.objects.all()
+    elif filter_type == 'waiting':
+        boards = Board.objects.filter(comments__isnull=True)
+    elif filter_type == 'my_posts':
+        boards = Board.objects.filter(user__kakao_id=kakao_id)
+    else:
+        boards = Board.objects.all()
+
+    return render(request, 'board_list.html', {'boards': boards})
    
 def board_create(request):
     if request.method == 'POST':
