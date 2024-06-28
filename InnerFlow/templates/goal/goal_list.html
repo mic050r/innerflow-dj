@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/goal/goal_list.css' %}">
+    <title>Goals</title>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>목표 달성률</h1>
+        <p class="sub-title">목표를 향해 한 발짝씩 다가가는 여정을 함께해요.</p>
+    </div>
+    <button onclick="window.location.href='{% url 'goal_create' %}'" class="btn">
+        <img src="{% static 'images/plus-icon.svg' %}" alt="Add Goal" class="button-icon"> <!-- 여기서 이미지를 추가 -->
+    </button>
+    <div class="content">
+        <div class="goal-grid">
+            {% for goal_stat in goal_stats %}
+                <div class="goal-item" onclick="location.href='{% url 'todo_list' goal_stat.goal.goal_id %}'">
+                    <div class="goal-text">
+                        {{ goal_stat.goal.goal }}
+                    </div>
+                    <div class="goal-progress">
+                        <div class="progress-bar">
+                            <div class="progress" style="width: {{ goal_stat.completion_rate }}%;"></div>
+                        </div>
+                        <div class="progress-text">
+                            {{ goal_stat.completion_rate }}% completed
+                            ({{ goal_stat.completed_todos }}/{{ goal_stat.total_todos }})
+                        </div>
+                    </div>
+                    <div class="goal-actions">
+                        <a href="{% url 'goal_update' goal_stat.goal.goal_id %}">Edit</a>
+                        <a href="{% url 'goal_delete' goal_stat.goal.goal_id %}">Delete</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<footer>
+    <ul>
+        <li><a href="#" id="goal-link"><img src="{% static 'images/home.svg' %}" alt="Goal" id="goal-icon"></a></li>
+        <li><a href="#" id="home-link"><img src="{% static 'images/journal.svg' %}" alt="Home" id="home-icon"></a></li>
+        <li><a href="#" id="journal-link"><img src="{% static 'images/goal-active.svg' %}" alt="Journal"
+                                               id="journal-icon"></a></li>
+        <li><a href="#" id="board-link"><img src="{% static 'images/board.svg' %}" alt="Board" id="board-icon"></a></li>
+    </ul>
+</footer>
+</body>
+</html>
