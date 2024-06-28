@@ -403,7 +403,7 @@ def achievement_form(request, date):
             achievement.save()
             return redirect('daily_log')
     else:
-        form = AchievementForm(instance=achievement)
+        form = AchievementForm(instance=achievement, initial={'date': date})  # 초기값으로 date를 설정
 
     return render(request, 'journal/achievement_form.html', {'form': form, 'date': date})
 

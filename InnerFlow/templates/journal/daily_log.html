@@ -1,3 +1,4 @@
+{% load static %}
 <!-- calendarapp/templates/calendarapp/calendar.html -->
 <!DOCTYPE html>
 <html>
@@ -5,6 +6,7 @@
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css' rel='stylesheet'/>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@5.9.0/main.min.js'></script>
+    <link rel="stylesheet" href="{% static 'css/journal/daily_log.css' %}">
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar');
@@ -23,27 +25,35 @@
     </script>
 </head>
 <body>
-<div id='calendar'></div>
 <div class="container">
-    <h1>Daily Log</h1>
-    <div id="calendar" style="max-width: 900px; margin: 40px auto;"></div>
-    <div class="praise-section">
-        <h2>Praises</h2>
-        <form method="post" action="">
-            {% csrf_token %}
-            {{ praise_form.as_p }}
-            <button type="submit">Add Praise</button>
-        </form>
-        <ul>
-            {% for praise in praises %}
-                <li>{{ praise.content }}
-                    <form method="post" action="{% url 'delete_praise' praise.id %}"
-                          style="display:inline;">{% csrf_token %}
-                        <button type="submit">X</button>
-                    </form>
-                </li>
-            {% endfor %}
-        </ul>
+    <header>
+        <h1>성취일지&칭찬일지</h1>
+        <p class="sub-title">오늘의 성취를 기록하고, 자신을 칭찬해보세요.</p>
+    </header>
+
+    <div class="content">
+        <div class="achievement-section">
+            <p>📒 성취 일지를 작성하여 당신의 내면 성장을 기록해보세요.</p>
+            <div id='calendar'></div>
+        </div>
+        <div class="praise-section">
+            <p> 😘 감사하고 긍정적인 마음으로 하루를 마무리해봐요.</p>
+            <form method="post" action="">
+                {% csrf_token %}
+                {{ praise_form.as_p }}
+                <button type="submit">Add Praise</button>
+            </form>
+            <ul>
+                {% for praise in praises %}
+                    <li>{{ praise.content }}
+                        <form method="post" action="{% url 'delete_praise' praise.id %}"
+                              style="display:inline;">{% csrf_token %}
+                            <button type="submit">X</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 </div>
 </body>
