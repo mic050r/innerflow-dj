@@ -26,6 +26,9 @@ class AchievementForm(forms.ModelForm):
     class Meta:
         model = Achievement
         fields = ['title', 'date', 'keyword', 'temperature', 'content']
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}),
+        }
 
 class PraiseForm(forms.ModelForm):
     class Meta:
