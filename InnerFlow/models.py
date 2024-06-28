@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, Group, Permission
 from django.db import models
+from django.conf import settings
+
 
 class UserManager(BaseUserManager):
     def create_user(self, kakao_id, password=None, **extra_fields):
@@ -45,3 +47,23 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return str(self.kakao_id)
+
+class Board(models.Model):
+    board_id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255, null=False)
+    content = models.TextField(null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+class Comment(models.Model):
+    comment_id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    board = models.ForeignKey(Board, on_delete=models.CASCADE, related_name='comments')
+    comment = models.CharField(max_length=255, null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.comment

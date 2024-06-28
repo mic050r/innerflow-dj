@@ -1,0 +1,26 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h2>{{ board.title }}</h2>
+  <p>{{ board.content }}</p>
+  <p>Created at: {{ board.created_at }}</p>
+  <a href="{% url 'board_update' board.board_id %}">Edit</a>
+  <form action="{% url 'board_delete' board.board_id %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Delete</button>
+  </form>
+  <hr>
+  <h3>Comments</h3>
+  <ul>
+    {% for comment in comments %}
+      <li>{{ comment.comment }} - {{ comment.created_at }}
+        <a href="{% url 'comment_update' comment.comment_id %}">Edit</a>
+        <form action="{% url 'comment_delete' comment.comment_id %}" method="post">
+          {% csrf_token %}
+          <button type="submit">Delete</button>
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'comment_create' board.board_id %}">Add a comment</a>
+{% endblock %}
