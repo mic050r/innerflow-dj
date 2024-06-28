@@ -157,7 +157,7 @@ def board_list(request):
         boards = Board.objects.filter(Q(title__icontains=query) | Q(content__icontains=query))
     else:
         boards = Board.objects.all()
-    return render(request, 'board_list.html', {'boards': boards})
+    return render(request, 'board/board_list.html', {'boards': boards})
 
 
 def board_detail(request, board_id):
@@ -174,7 +174,7 @@ def board_detail(request, board_id):
     else:
         form = CommentForm()
 
-    return render(request, 'board_detail.html', {
+    return render(request, 'board/board_detail.html', {
         'board': board,
         'comments': comments,
         'form': form
@@ -191,7 +191,7 @@ def board_filter(request, filter_type):
     else:
         boards = Board.objects.all()
 
-    return render(request, 'board_list.html', {'boards': boards})
+    return render(request, 'board/board_list.html', {'boards': boards})
    
 def board_create(request):
     if request.method == 'POST':
@@ -211,7 +211,7 @@ def board_create(request):
                 return HttpResponse("Error: User not found")
     else:
         form = BoardForm()
-    return render(request, 'board_form.html', {'form': form})
+    return render(request, 'board/board_form.html', {'form': form})
 
    
 def board_update(request, board_id):
@@ -229,7 +229,7 @@ def board_update(request, board_id):
             return redirect('board_detail', board_id=board.board_id)
     else:
         form = BoardForm(instance=board)
-    return render(request, 'board_form.html', {'form': form})
+    return render(request, 'board/board_form.html', {'form': form})
 
    
 def board_delete(request, board_id):
@@ -241,7 +241,7 @@ def board_delete(request, board_id):
     if request.method == 'POST':
         board.delete()
         return redirect('board_list')
-    return render(request, 'board_confirm_delete.html', {'board': board})
+    return render(request, 'board/board_confirm_delete.html', {'board': board})
 
    
 def comment_create(request, board_id):
@@ -264,7 +264,7 @@ def comment_create(request, board_id):
                 return HttpResponse("Error: User not found")
     else:
         form = CommentForm()
-    return render(request, 'comment_form.html', {'form': form})
+    return render(request, 'board/comment_form.html', {'form': form})
 
    
 def comment_update(request, comment_id):
@@ -280,7 +280,7 @@ def comment_update(request, comment_id):
             return redirect('board_detail', board_id=comment.board.board_id)
     else:
         form = CommentForm(instance=comment)
-    return render(request, 'comment_form.html', {'form': form})
+    return render(request, 'board/comment_form.html', {'form': form})
 
    
 def comment_delete(request, comment_id):
@@ -292,7 +292,7 @@ def comment_delete(request, comment_id):
     if request.method == 'POST':
         comment.delete()
         return redirect('board_detail', board_id=comment.board.board_id)
-    return render(request, 'comment_confirm_delete.html', {'comment': comment})
+    return render(request, 'board/comment_confirm_delete.html', {'comment': comment})
 
  
 def goal_list(request):
