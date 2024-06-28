@@ -42,4 +42,13 @@ urlpatterns = [
     path('boards/<int:board_id>/comments/create/', views.comment_create, name='comment_create'),
     path('comments/<int:comment_id>/update/', views.comment_update, name='comment_update'),
     path('comments/<int:comment_id>/delete/', views.comment_delete, name='comment_delete'),
+
+    path('goal/', views.goal_list, name='goal_list'),
+    path('goal/create/', views.goal_create, name='goal_create'),
+    path('goal/<int:goal_id>/update/', views.goal_update, name='goal_update'),
+    path('goal/<int:goal_id>/delete/', views.goal_delete, name='goal_delete'),
+    path('goal/<int:goal_id>/todos/', views.todo_list, name='todo_list'),
+    path('todo/<int:todo_id>/update/', views.todo_update, name='todo_update'),
+    path('todo/<int:todo_id>/delete/', views.todo_delete, name='todo_delete'),
+    path('todo/<int:todo_id>/update_checked/', views.update_checked, name='update_checked'),
 ]
