@@ -1,10 +1,5 @@
 @import url('public.css');
 
-.body {
-    display: flex;
-    flex-direction: column;
-}
-
 .top-container {
     padding-top: 2%;
     padding-bottom: 2%;
@@ -26,25 +21,19 @@
 
 /* info */
 .info-container {
-     background-color: rgba(200, 184, 250, 0.4); /* 투명도 40% 적용 */
+    background-color: rgba(200, 184, 250, 0.4); /* 투명도 40% 적용 */
     width: 100%;
 }
 
 .info-group {
     display: flex;
     flex-direction: column; /* info-group 내부 요소들을 세로로 정렬 */
+    padding: 2%;
 }
 
 .info-tag {
     display: flex;
-    gap: 10px; /* 요소들 사이에 간격 추가 */
-    margin-bottom: 20px; /* 하단에 여백 추가 */
-}
-
-.info-tag {
-    display: flex;
-    margin: 2%;
-    gap: 3%; /* 요소들 사이에 간격 추가 */
+    gap: 2%; /* 요소들 사이에 간격 추가 */
     margin-bottom: 20px; /* 하단에 여백 추가 */
     cursor: pointer;
 }
@@ -65,6 +54,19 @@
     transform: translateY(1px); /* 밑줄을 텍스트에서 조금 떨어지게 */
 }
 
+#info-data {
+    display: flex;
+    flex-wrap: wrap; /* 여러 줄로 나열되도록 허용 */
+    gap: 2%; /* 요소들 사이에 간격 추가 */
+    margin-left: 1%;
+}
+
+.info-img {
+    border-radius: 10px; /* 원하는 둥근 정도를 설정하세요 */
+    height: 130px;
+    max-width: 200px; /* 이미지 최대 너비 */
+}
+
 /* my achievement */
 .main {
     justify-content: center;
@@ -75,14 +77,94 @@
     font-size: 20px;
 }
 
+.achievement-container {
+    width: 70%;
+    margin: 20px auto;
+}
+
 .achievement-group {
-    margin-left: 5%;
+    margin-top: 1%;
+    margin-left: 2%;
+    display: flex;
+    flex-wrap: wrap; /* 여러 줄로 나열되도록 허용 */
 }
 
 .achievement-tag {
-    color: var(--main-color);
+    background-color: var(--main-color);
     color: var(--white);
     border-radius: 20px;
+    padding: 5px 10px; /* 태그에 패딩을 추가 */
+    margin: 5px; /* 태그 간의 간격을 추가 */
+    display: inline-block; /* 인라인 블록 요소로 설정 */
 }
 
+/* goal progress */
+.goal-container {
+    width: 70%;
+    margin: 20px auto;
+    padding-bottom: 3%;
+}
 
+.goal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.goal-group {
+    max-height: 400px; /* 원하는 높이 설정 */
+    overflow-y: scroll; /* 스크롤바 추가 */
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.goal-group::-webkit-scrollbar {
+    width: 8px;
+}
+
+.goal-group::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+}
+
+.goal {
+    align-content: center;
+    justify-content: center;
+    height: 50px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.goal-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.progress-info {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 요소들 사이의 간격 */
+}
+
+.num {
+    font-size: 14px;
+}
+
+.progress-bar {
+    width: 220px; /* 너비를 조정하여 프로그레스 바의 길이를 설정 */
+    background-color: #eee;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 10px;
+    background-color: var(--main-color);
+}
+
+.percentage {
+    font-size: 14px;
+}
