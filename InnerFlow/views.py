@@ -349,11 +349,18 @@ def goal_delete(request, goal_id):
         goal.delete()
         return redirect('goal_list')
     return render(request, 'goal/goal_confirm_delete.html', {'goal': goal})
- 
+
+
 def todo_list(request, goal_id):
     kakao_id = request.session.get('kakao_id')
     goal = get_object_or_404(Goal, pk=goal_id, user__kakao_id=kakao_id)
     todos = Todo.objects.filter(goal=goal)
+
+    # 목표 진행 상황 계산
+    total_todos = todos.count()
+    completed_todos = todos.filter(checked=True).count()
+    completion_rate = (completed_todos / total_todos) * 100 if total_todos > 0 else 0
+
     if request.method == 'POST':
         form = TodoForm(request.POST)
         if form.is_valid():
@@ -363,9 +370,17 @@ def todo_list(request, goal_id):
             return redirect('todo_list', goal_id=goal_id)
     else:
         form = TodoForm()
-    return render(request, 'goal/todo_list.html', {'goal': goal, 'todos': todos, 'form': form})
 
- 
+    return render(request, 'goal/todo_list.html', {
+        'goal': goal,
+        'todos': todos,
+        'form': form,
+        'total_todos': total_todos,
+        'completed_todos': completed_todos,
+        'completion_rate': round(completion_rate),
+    })
+
+
 def todo_update(request, todo_id):
     kakao_id = request.session.get('kakao_id')
     todo = get_object_or_404(Todo, pk=todo_id, goal__user__kakao_id=kakao_id)

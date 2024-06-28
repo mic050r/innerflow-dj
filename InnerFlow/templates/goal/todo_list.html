@@ -1,43 +1,62 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ goal.goal }}</title>
+    <link rel="stylesheet" href="{% static 'css/goal/todo_list.css' %}">
 </head>
 <body>
-    <h2>{{ goal.goal }}</h2>
-    <ul>
+<div class="container">
+    <div class="goal-content">
+        <p>{{ goal.goal }}</p>
+        <div class="progress-info">
+            <div class="progress-bar">
+                <div class="progress" style="width: {{ completion_rate }}%;"></div>
+            </div>
+            <div class="num">{{ completed_todos }}/{{ total_todos }}</div>
+            <div class="percentage">{{ completion_rate }}%</div>
+        </div>
+    </div>
+    <form method="post" class="todo-form">
+    {% csrf_token %}
+    <div class="input-container">
+        <input type="text" name="todo" placeholder="목표에 맞는 세부적인 할 일을 작성해주세요!" required>
+        <button type="submit"><img src="{% static 'images/plus-icon-main.svg' %}" alt="Add"></button>
+    </div>
+</form>
+    <ul class="todo-list">
         {% for todo in todos %}
-            <li>
-                {{ todo.todo }}
-                <input type="checkbox" {% if todo.checked %}checked{% endif %} onclick="updateChecked({{ todo.todo_id }}, this.checked)">
-                <a href="{% url 'todo_update' todo.todo_id %}">Edit</a>
-                <a href="{% url 'todo_delete' todo.todo_id %}">Delete</a>
+            <li class="todo-item">
+                <div class="left-content">
+                    <input type="checkbox" {% if todo.checked %}checked{% endif %}
+                           onclick="updateChecked({{ todo.todo_id }}, this.checked)">
+                    <span>{{ todo.todo }}</span>
+                </div>
+                <div class="right-content">
+                    <a href="{% url 'todo_update' todo.todo_id %}">Edit</a>
+                    <a href="{% url 'todo_delete' todo.todo_id %}">Delete</a>
+                </div>
             </li>
         {% endfor %}
     </ul>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Add Todo</button>
-    </form>
-
-    <script>
-        function updateChecked(todoId, checked) {
-            fetch(`/todo/${todoId}/update_checked/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                body: JSON.stringify({ checked: checked })
-            }).then(response => {
-                if (!response.ok) {
-                    alert('Failed to update checked status');
-                }
-            });
-        }
-    </script>
+</div>
+<script>
+    function updateChecked(todoId, checked) {
+        fetch(`/todo/${todoId}/update_checked/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({checked: checked})
+        }).then(response => {
+            if (!response.ok) {
+                alert('Failed to update checked status');
+            }
+        });
+    }
+</script>
 </body>
 </html>

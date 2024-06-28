@@ -1,0 +1,164 @@
+@import url('../public.css');
+
+.container {
+    width: 70%;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+.goal {
+    align-content: center;
+    justify-content: center;
+    height: 50px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.goal-content {
+    align-content: center;
+    justify-content: center;
+    height: 50px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.progress-info {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 요소들 사이의 간격 */
+}
+
+.num {
+    font-size: 14px;
+}
+
+.progress-bar {
+    width: 220px; /* 너비를 조정하여 프로그레스 바의 길이를 설정 */
+    background-color: #eee;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 10px;
+    background-color: var(--main-color);
+}
+
+.percentage {
+    font-size: 14px;
+}
+
+.num, .percentage {
+    font-size: 14px;
+}
+
+.todo-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.todo-item {
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-content {
+    display: flex;
+    align-items: center;
+}
+
+.left-content span {
+    margin-left: 10px;
+}
+
+.right-content a {
+    margin-left: 10px;
+    text-decoration: none;
+    color: #007bff;
+}
+
+.right-content a:hover {
+    text-decoration: underline;
+}
+
+.todo-form {
+    text-align: center;
+}
+
+.todo-form button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.todo-form button:hover {
+    background-color: #0056b3;
+}
+
+
+.input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+
+}
+
+.input-container input {
+    width: 80%;
+    height: 35px;
+    padding: 10px 40px 10px 10px; /* Adjust padding for placeholder */
+    border: none;
+    border-radius: 8px;
+    background-color: var(--third-color);
+    font-size: 16px;
+}
+
+.input-container input::placeholder {
+    color: var(--gray3);
+}
+
+.input-container button {
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    right: 10%;
+    cursor: pointer;
+}
+
+.input-container button img {
+    width: 22px;
+    height: 22px;
+}
+
+.todo-form button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
