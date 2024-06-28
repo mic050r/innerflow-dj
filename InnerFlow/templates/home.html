@@ -7,93 +7,139 @@
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 <body>
-    {# 헤더 #}
-    <section class="top-container">
-        <p class="title">임지현님, 반가워요</p>
-        <p class="sub-title">심리적인 안정과 성장을 위한 여정을 시작해보세요.</p>
-    </section>
+<style>
+    footer {
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    }
 
-    {# 도움 되는 아티클 #}
-    <section class="info-container">
-        <div class="info-group">
-            <div class="info-tag">
-                <p class="tag" data-tag="가면 증후군">가면증후군</p>
-                <p class="tag" data-tag="극복">극복</p>
-                <p class="tag" data-tag="자기성장">자기성장</p>
-                <p class="tag" data-tag="독서추천">독서 추천</p>
-            </div>
-            {# json 데이터 넣을 곳 #}
-            <div class="info-data">
-                <a href="" id="info-link">
-                    <img src="" alt="" id="info-img">
-                </a>
-            </div>
+    footer ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    footer ul li {
+        margin: 0 3%;
+    }
+
+    footer ul li a {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        background-size: contain;
+    }
+
+    footer ul li a img {
+        width: 24px;
+        height: 24px;
+    }
+
+</style>
+{# 헤더 #}
+<section class="top-container">
+    <p class="title">임지현님, 반가워요</p>
+    <p class="sub-title">심리적인 안정과 성장을 위한 여정을 시작해보세요.</p>
+</section>
+
+{# 도움 되는 아티클 #}
+<section class="info-container">
+    <div class="info-group">
+        <div class="info-tag">
+            <p class="tag" data-tag="가면 증후군">가면증후군</p>
+            <p class="tag" data-tag="극복">극복</p>
+            <p class="tag" data-tag="자기성장">자기성장</p>
+            <p class="tag" data-tag="독서추천">독서 추천</p>
+        </div>
+        {# json 데이터 넣을 곳 #}
+        <div class="info-data">
+            <a href="" id="info-link">
+                <img src="" alt="" id="info-img">
+            </a>
+        </div>
+    </div>
+</section>
+
+<main>
+    {# 나의 업적 #}
+    <section class="achievement-container">
+        <p class="home-title">나의 업적</p>
+        <div class="achievement-group">
+            {# DB에서 값 가져오기 #}
+            <p class="achievement-tag">운동</p>
+            <p class="achievement-tag">긍정적인 마인으</p>
         </div>
     </section>
 
-    <main>
-        {# 나의 업적 #}
-        <section class="achievement-container">
-            <p class="home-title">나의 업적</p>
-            <div class="achievement-group">
-                {# DB에서 값 가져오기 #}
-                <p class="achievement-tag">운동</p>
-                <p class="achievement-tag">긍정적인 마인으</p>
-            </div>
-        </section>
-
-        {# 목표 진행 상황 #}
-        <section class="goal-container">
-            <p class="home-title">목표 진행상황</p>
-            <p>더보기</p>
-            <div class="goal-group">
-                {# DB에서 값 가져오기 #}
-                <div class="goal">
-                    <p>실패가 두려운 완벽주의자를 위한 심리학 완독하기</p>
-                    <div class="num">
-                        <p>2</p>
-                        <p>/3</p>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress"></div>
-                    </div>
-                    <div>88%</div>
+    {# 목표 진행 상황 #}
+    <section class="goal-container">
+        <p class="home-title">목표 진행상황</p>
+        <p>더보기</p>
+        <div class="goal-group">
+            {# DB에서 값 가져오기 #}
+            <div class="goal">
+                <p>실패가 두려운 완벽주의자를 위한 심리학 완독하기</p>
+                <div class="num">
+                    <p>2</p>
+                    <p>/3</p>
                 </div>
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                </div>
+                <div>88%</div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
+</main>
 
-    {# TODO : 홈에 들어왔을 때 가면증후군 태그가 렌더링되어 있도록 추가하기  #}
-    <script>
-        // View로부터 전달받은 JSON 데이터를 스크립트로 변환
-        const data = JSON.parse('{{ data|escapejs }}');
+<footer>
+    <ul>
+        <li><a href="#" id="goal-link"><img src="{% static 'images/home-active.svg' %}" alt="Goal" id="goal-icon"></a></li>
+        <li><a href="#" id="home-link"><img src="{% static 'images/journal.svg' %}" alt="Home" id="home-icon"></a></li>
+        <li><a href="#" id="journal-link"><img src="{% static 'images/goal.svg' %}" alt="Journal" id="journal-icon"></a>
+        </li>
+        <li><a href="#" id="board-link"><img src="{% static 'images/board.svg' %}" alt="Board" id="board-icon"></a></li>
+    </ul>
+</footer>
 
-        console.log(data);
+{# TODO : 홈에 들어왔을 때 가면증후군 태그가 렌더링되어 있도록 추가하기  #}
+<script>
+    // View로부터 전달받은 JSON 데이터를 스크립트로 변환
+    const data = JSON.parse('{{ data|escapejs }}');
 
-        // 태그 요소들 선택
-        const tags = document.querySelectorAll('.tag');
+    console.log(data);
 
-        // 각 태그에 클릭 이벤트 추가
-        tags.forEach(tag => {
-            tag.addEventListener('click', () => {
-                // 모든 태그에서 active 클래스 제거
-                tags.forEach(t => t.classList.remove('active'));
+    // 태그 요소들 선택
+    const tags = document.querySelectorAll('.tag');
 
-                // 클릭된 태그에 active 클래스 추가
-                tag.classList.add('active');
+    // 각 태그에 클릭 이벤트 추가
+    tags.forEach(tag => {
+        tag.addEventListener('click', () => {
+            // 모든 태그에서 active 클래스 제거
+            tags.forEach(t => t.classList.remove('active'));
 
-                console.log(`Tag clicked: ${tag.textContent}`); // 디버깅을 위한 콘솔 로그
+            // 클릭된 태그에 active 클래스 추가
+            tag.classList.add('active');
 
-                const selectedTag = tag.getAttribute('data-tag');
-                const selectedData = data.find(item => item.tag === selectedTag);
+            console.log(`Tag clicked: ${tag.textContent}`); // 디버깅을 위한 콘솔 로그
 
-                if (selectedData) {
-                    document.getElementById('info-link').href = selectedData.link;
-                    document.getElementById('info-img').src = selectedData.img;
-                }
-            });
+            const selectedTag = tag.getAttribute('data-tag');
+            const selectedData = data.find(item => item.tag === selectedTag);
+
+            if (selectedData) {
+                document.getElementById('info-link').href = selectedData.link;
+                document.getElementById('info-img').src = selectedData.img;
+            }
         });
-    </script>
+    });
+</script>
 
 </body>
 </html>
