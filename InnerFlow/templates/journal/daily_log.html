@@ -7,6 +7,7 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@5.9.0/main.min.js'></script>
     <link rel="stylesheet" href="{% static 'css/journal/daily_log.css' %}">
+    <link rel="stylesheet" href="{% static 'css/journal/calendar.css' %}">
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar');
@@ -56,8 +57,6 @@
                 {% endfor %}
             </ul>
         </div>
-
-
     </div>
 </div>
 {% block content %}{% endblock %}
@@ -67,7 +66,6 @@
     const praiseInput = document.getElementById('id_content');
     const praiseForm = praiseInput.closest('form');
 
-    // Handle praise form submission with Enter key
     praiseInput.addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
             e.preventDefault();
