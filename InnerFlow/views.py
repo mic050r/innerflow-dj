@@ -26,14 +26,46 @@ logger = logging.getLogger(__name__)
 
 load_dotenv()
 
+
 def index(request):
     return render(request, 'index.html')
 
+
 def home(request):
+    kakao_id = request.session.get('kakao_id')
+    kakao_nickname = request.session.get('kakao_nickname')
+
     with open('./InnerFlow/static/data/info.json', 'r', encoding='utf-8') as file:
         data = json.load(file)
     print(data)
-    return render(request, 'home.html', {'data': json.dumps(data)})
+
+    # 업적 데이터 가져오기
+    achievements = Achievement.objects.filter(user__kakao_id=kakao_id)
+    keywords = []
+    for achievement in achievements:
+        keywords.extend(achievement.keyword.split('/'))
+
+    # 목표 데이터 가져오기 (최신순으로 3개)
+    goals = Goal.objects.filter(user__kakao_id=kakao_id).order_by('-created_at')[:3]
+    goal_stats = []
+    for goal in goals:
+        todos = Todo.objects.filter(goal=goal)
+        total_todos = todos.count()
+        completed_todos = todos.filter(checked=True).count()
+        completion_rate = (completed_todos / total_todos) * 100 if total_todos > 0 else 0
+        goal_stats.append({
+            'goal': goal,
+            'total_todos': total_todos,
+            'completed_todos': completed_todos,
+            'completion_rate': completion_rate,
+        })
+
+    return render(request, 'home.html', {
+        'data': json.dumps(data),  # 기존의 data 추가
+        'keywords': keywords,
+        'goal_stats': goal_stats,
+        'nickname': kakao_nickname
+    })
 
 
 # 카카오 로그인 페이지로 리다이렉트하는 함수
@@ -91,7 +123,7 @@ def kakao_callback(request):
         kakao_nickname = profile["properties"]["nickname"]
 
         user, created = User.objects.get_or_create(kakao_id=kakao_id, defaults={"profile": kakao_profile_url,
-                                                                                      "nickname": kakao_nickname})
+                                                                                "nickname": kakao_nickname})
         if created:
             user.set_unusable_password()
             user.save()
@@ -103,12 +135,14 @@ def kakao_callback(request):
         request.session['access_token'] = str(access)
         request.session['refresh_token'] = str(refresh)
         request.session['kakao_id'] = str(kakao_id)
+        request.session['kakao_nickname'] = str(kakao_nickname)
         print(request.session.get('kakao_id'))
 
         return redirect('/home/')  # 로그인 성공 후 /home으로 리다이렉트
 
     except KeyError as e:
         return HttpResponse(f"Error: {str(e)}")  # 예외 발생 시 에러 메시지 반환
+
 
 def check_session(request):
     access_token = request.session.get('access_token', 'No access token in session')
@@ -118,14 +152,14 @@ def check_session(request):
         'refresh_token': refresh_token
     })
 
-   
+
 def board_list(request):
     query = request.GET.get('q')
     if query:
-        boards = Board.objects.filter(Q(title__icontains=query) | Q(content__icontains=query))
+        boards = Board.objects.filter(Q(title__icontains=query) | Q(content__icontains=query)).order_by('-created_at')
     else:
-        boards = Board.objects.all()
-    return render(request, 'board_list.html', {'boards': boards})
+        boards = Board.objects.all().order_by('-created_at')
+    return render(request, 'board/board_list.html', {'boards': boards})
 
 
 def board_detail(request, board_id):
@@ -142,25 +176,27 @@ def board_detail(request, board_id):
     else:
         form = CommentForm()
 
-    return render(request, 'board_detail.html', {
+    return render(request, 'board/board_detail.html', {
         'board': board,
         'comments': comments,
         'form': form
     })
 
+
 def board_filter(request, filter_type):
     kakao_id = request.session.get('kakao_id')
     if filter_type == 'all':
-        boards = Board.objects.all()
+        boards = Board.objects.all().order_by('-created_at')
     elif filter_type == 'waiting':
-        boards = Board.objects.filter(comments__isnull=True)
+        boards = Board.objects.filter(comments__isnull=True).order_by('-created_at')
     elif filter_type == 'my_posts':
-        boards = Board.objects.filter(user__kakao_id=kakao_id)
+        boards = Board.objects.filter(user__kakao_id=kakao_id).order_by('-created_at')
     else:
-        boards = Board.objects.all()
+        boards = Board.objects.all().order_by('-created_at')
 
-    return render(request, 'board_list.html', {'boards': boards})
-   
+    return render(request, 'board/board_list.html', {'boards': boards})
+
+
 def board_create(request):
     if request.method == 'POST':
         form = BoardForm(request.POST)
@@ -179,9 +215,9 @@ def board_create(request):
                 return HttpResponse("Error: User not found")
     else:
         form = BoardForm()
-    return render(request, 'board_form.html', {'form': form})
+    return render(request, 'board/board_form.html', {'form': form})
 
-   
+
 def board_update(request, board_id):
     board = get_object_or_404(Board, board_id=board_id)
     kakao_id = request.session.get('kakao_id')
@@ -197,9 +233,9 @@ def board_update(request, board_id):
             return redirect('board_detail', board_id=board.board_id)
     else:
         form = BoardForm(instance=board)
-    return render(request, 'board_form.html', {'form': form})
+    return render(request, 'board/board_form.html', {'form': form})
 
-   
+
 def board_delete(request, board_id):
     board = get_object_or_404(Board, board_id=board_id)
     kakao_id = request.session.get('kakao_id')
@@ -209,9 +245,9 @@ def board_delete(request, board_id):
     if request.method == 'POST':
         board.delete()
         return redirect('board_list')
-    return render(request, 'board_confirm_delete.html', {'board': board})
+    return render(request, 'board/board_confirm_delete.html', {'board': board})
 
-   
+
 def comment_create(request, board_id):
     board = get_object_or_404(Board, pk=board_id, user__kakao_id=request.session.get('kakao_id'))
     if request.method == 'POST':
@@ -232,9 +268,9 @@ def comment_create(request, board_id):
                 return HttpResponse("Error: User not found")
     else:
         form = CommentForm()
-    return render(request, 'comment_form.html', {'form': form})
+    return render(request, 'board/comment_form.html', {'form': form})
 
-   
+
 def comment_update(request, comment_id):
     comment = get_object_or_404(Comment, comment_id=comment_id)
     kakao_id = request.session.get('kakao_id')
@@ -248,9 +284,9 @@ def comment_update(request, comment_id):
             return redirect('board_detail', board_id=comment.board.board_id)
     else:
         form = CommentForm(instance=comment)
-    return render(request, 'comment_form.html', {'form': form})
+    return render(request, 'board/comment_form.html', {'form': form})
 
-   
+
 def comment_delete(request, comment_id):
     comment = get_object_or_404(Comment, comment_id=comment_id)
     kakao_id = request.session.get('kakao_id')
@@ -260,9 +296,9 @@ def comment_delete(request, comment_id):
     if request.method == 'POST':
         comment.delete()
         return redirect('board_detail', board_id=comment.board.board_id)
-    return render(request, 'comment_confirm_delete.html', {'comment': comment})
+    return render(request, 'board/comment_confirm_delete.html', {'comment': comment})
 
- 
+
 def goal_list(request):
     kakao_id = request.session.get('kakao_id')
     goals = Goal.objects.filter(user__kakao_id=kakao_id)
@@ -282,6 +318,7 @@ def goal_list(request):
             'completion_rate': completion_rate,
         })
     return render(request, 'goal/goal_list.html', {'goal_stats': goal_stats})
+
 
 def goal_create(request):
     kakao_id = request.session.get('kakao_id')
@@ -310,6 +347,7 @@ def goal_update(request, goal_id):
         form = GoalForm(instance=goal)
     return render(request, 'goal/goal_form.html', {'form': form})
 
+
 def goal_delete(request, goal_id):
     kakao_id = request.session.get('kakao_id')
     goal = get_object_or_404(Goal, pk=goal_id, user__kakao_id=kakao_id)
@@ -317,11 +355,18 @@ def goal_delete(request, goal_id):
         goal.delete()
         return redirect('goal_list')
     return render(request, 'goal/goal_confirm_delete.html', {'goal': goal})
- 
+
+
 def todo_list(request, goal_id):
     kakao_id = request.session.get('kakao_id')
     goal = get_object_or_404(Goal, pk=goal_id, user__kakao_id=kakao_id)
     todos = Todo.objects.filter(goal=goal)
+
+    # 목표 진행 상황 계산
+    total_todos = todos.count()
+    completed_todos = todos.filter(checked=True).count()
+    completion_rate = (completed_todos / total_todos) * 100 if total_todos > 0 else 0
+
     if request.method == 'POST':
         form = TodoForm(request.POST)
         if form.is_valid():
@@ -331,9 +376,17 @@ def todo_list(request, goal_id):
             return redirect('todo_list', goal_id=goal_id)
     else:
         form = TodoForm()
-    return render(request, 'goal/todo_list.html', {'goal': goal, 'todos': todos, 'form': form})
 
- 
+    return render(request, 'goal/todo_list.html', {
+        'goal': goal,
+        'todos': todos,
+        'form': form,
+        'total_todos': total_todos,
+        'completed_todos': completed_todos,
+        'completion_rate': round(completion_rate),
+    })
+
+
 def todo_update(request, todo_id):
     kakao_id = request.session.get('kakao_id')
     todo = get_object_or_404(Todo, pk=todo_id, goal__user__kakao_id=kakao_id)
@@ -346,6 +399,7 @@ def todo_update(request, todo_id):
         form = TodoForm(instance=todo)
     return render(request, 'goal/todo_form.html', {'form': form})
 
+
 @require_POST
 def update_checked(request, todo_id):
     kakao_id = request.session.get('kakao_id')
@@ -354,6 +408,7 @@ def update_checked(request, todo_id):
     todo.checked = data.get('checked', False)
     todo.save()
     return JsonResponse({'status': 'success'})
+
 
 def todo_delete(request, todo_id):
     kakao_id = request.session.get('kakao_id')
@@ -367,7 +422,7 @@ def todo_delete(request, todo_id):
 
 def daily_log(request):
     kakao_id = request.session.get('kakao_id')
-    praises = Praise.objects.filter(user__kakao_id=kakao_id).order_by('-created_at')
+    praises = Praise.objects.filter(user__kakao_id=kakao_id).order_by('-created_at')  # 최신순으로
     achievements = Achievement.objects.filter(user__kakao_id=kakao_id)
     praise_form = PraiseForm()
 
@@ -385,12 +440,14 @@ def daily_log(request):
         'achievements': achievements
     })
 
+
 def delete_praise(request, praise_id):
     kakao_id = request.session.get('kakao_id')
     praise = get_object_or_404(Praise, id=praise_id, user__kakao_id=kakao_id)
     if request.method == 'POST':
         praise.delete()
         return redirect('daily_log')
+
 
 def achievement_form(request, date):
     kakao_id = request.session.get('kakao_id')
@@ -407,10 +464,12 @@ def achievement_form(request, date):
 
     return render(request, 'journal/achievement_form.html', {'form': form, 'date': date})
 
+
 def achievement_detail(request, achievement_id):
     kakao_id = request.session.get('kakao_id')
     achievement = get_object_or_404(Achievement, id=achievement_id, user__kakao_id=kakao_id)
     return render(request, 'journal/achievement_detail.html', {'achievement': achievement})
+
 
 def events(request):
     kakao_id = request.session.get('kakao_id')

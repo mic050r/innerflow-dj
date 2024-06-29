@@ -7,45 +7,9 @@
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 <body>
-<style>
-    footer {
-        color: white;
-        text-align: center;
-        padding: 10px 0;
-        position: fixed;
-        width: 100%;
-        bottom: 0;
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
-    }
-
-    footer ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-    }
-
-    footer ul li {
-        margin: 0 3%;
-    }
-
-    footer ul li a {
-        display: inline-block;
-        width: 24px;
-        height: 24px;
-        background-size: contain;
-    }
-
-    footer ul li a img {
-        width: 24px;
-        height: 24px;
-    }
-
-</style>
 {# 헤더 #}
 <section class="top-container">
-    <p class="title">임지현님, 반가워요</p>
+    <h2>{{ nickname }}님, 반가워요</h2>
     <p class="sub-title">심리적인 안정과 성장을 위한 여정을 시작해보세요.</p>
 </section>
 
@@ -59,10 +23,8 @@
             <p class="tag" data-tag="독서추천">독서 추천</p>
         </div>
         {# json 데이터 넣을 곳 #}
-        <div class="info-data">
-            <a href="" id="info-link">
-                <img src="" alt="" id="info-img">
-            </a>
+        <div class="info-data" id="info-data">
+            <!-- 이미지가 동적으로 추가될 곳 -->
         </div>
     </div>
 </section>
@@ -72,44 +34,62 @@
     <section class="achievement-container">
         <p class="home-title">나의 업적</p>
         <div class="achievement-group">
-            {# DB에서 값 가져오기 #}
-            <p class="achievement-tag">운동</p>
-            <p class="achievement-tag">긍정적인 마인으</p>
+            {% for keyword in keywords %}
+                <p class="achievement-tag">{{ keyword }}</p>
+            {% endfor %}
         </div>
     </section>
 
     {# 목표 진행 상황 #}
     <section class="goal-container">
-        <p class="home-title">목표 진행상황</p>
-        <p>더보기</p>
+        <div class="goal-header">
+            <p class="home-title">목표 진행상황</p>
+            <a href="{% url 'goal_list' %}" class="more-link">더보기</a>
+        </div>
         <div class="goal-group">
-            {# DB에서 값 가져오기 #}
-            <div class="goal">
-                <p>실패가 두려운 완벽주의자를 위한 심리학 완독하기</p>
-                <div class="num">
-                    <p>2</p>
-                    <p>/3</p>
+            {% for goal_stat in goal_stats %}
+                <div class="goal">
+                    <div class="goal-content">
+                        <p>{{ goal_stat.goal.goal }}</p>
+                        <div class="progress-info">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: {{ goal_stat.completion_rate|floatformat:0 }}%;"></div>
+                            </div>
+                            <div class="num">{{ goal_stat.completed_todos }}/{{ goal_stat.total_todos }}</div>
+                            <div class="percentage">{{ goal_stat.completion_rate|floatformat:0 }}%</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="progress-bar">
-                    <div class="progress"></div>
-                </div>
-                <div>88%</div>
-            </div>
+            {% endfor %}
         </div>
     </section>
 </main>
 
 <footer>
     <ul>
-        <li><a href="#" id="goal-link"><img src="{% static 'images/home-active.svg' %}" alt="Goal" id="goal-icon"></a></li>
-        <li><a href="#" id="home-link"><img src="{% static 'images/journal.svg' %}" alt="Home" id="home-icon"></a></li>
-        <li><a href="#" id="journal-link"><img src="{% static 'images/goal.svg' %}" alt="Journal" id="journal-icon"></a>
+        <li>
+            <a href="{% url 'home' %}" id="home-link">
+                <img src="{% static 'images/home-active.svg' %}" alt="Home" id="home-icon">
+            </a>
         </li>
-        <li><a href="#" id="board-link"><img src="{% static 'images/board.svg' %}" alt="Board" id="board-icon"></a></li>
+        <li>
+            <a href="{% url 'daily_log' %}" id="journal-link">
+                <img src="{% static 'images/journal.svg' %}" alt="Journal" id="journal-icon">
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'goal_list' %}" id="goal-link">
+                <img src="{% static 'images/goal.svg' %}" alt="Goal" id="goal-icon">
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'board_list' %}" id="board-link">
+                <img src="{% static 'images/board.svg' %}" alt="Board" id="board-icon">
+            </a>
+        </li>
     </ul>
 </footer>
 
-{# TODO : 홈에 들어왔을 때 가면증후군 태그가 렌더링되어 있도록 추가하기  #}
 <script>
     // View로부터 전달받은 JSON 데이터를 스크립트로 변환
     const data = JSON.parse('{{ data|escapejs }}');
@@ -118,6 +98,7 @@
 
     // 태그 요소들 선택
     const tags = document.querySelectorAll('.tag');
+    const infoData = document.getElementById('info-data');
 
     // 각 태그에 클릭 이벤트 추가
     tags.forEach(tag => {
@@ -131,13 +112,30 @@
             console.log(`Tag clicked: ${tag.textContent}`); // 디버깅을 위한 콘솔 로그
 
             const selectedTag = tag.getAttribute('data-tag');
-            const selectedData = data.find(item => item.tag === selectedTag);
+            const selectedData = data.filter(item => item.tag === selectedTag);
 
-            if (selectedData) {
-                document.getElementById('info-link').href = selectedData.link;
-                document.getElementById('info-img').src = selectedData.img;
-            }
+            // info-data 요소의 내용을 지우기
+            infoData.innerHTML = '';
+
+            selectedData.forEach(item => {
+                const link = document.createElement('a');
+                link.href = item.link;
+                const img = document.createElement('img');
+                img.src = item.img;
+                img.alt = item.tag;
+                img.classList.add('info-img'); // 클래스 추가
+                link.appendChild(img);
+                infoData.appendChild(link);
+            });
         });
+    });
+
+    // 페이지 로드 시 초기 상태 설정
+    window.addEventListener('load', () => {
+        const initialTag = document.querySelector('.tag[data-tag="가면 증후군"]');
+        if (initialTag) {
+            initialTag.click(); // 가면증후군 태그를 클릭한 것처럼 동작
+        }
     });
 </script>
 

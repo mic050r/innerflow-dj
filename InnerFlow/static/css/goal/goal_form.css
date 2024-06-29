@@ -1,0 +1,54 @@
+@import url('../public.css');
+
+body {
+    padding: 50px;
+}
+
+h2 {
+    text-align: center;
+    color: var(--main-color);
+}
+
+.goal-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: none; /* Hide the label */
+}
+
+.goal-form input[type="text"] {
+    width: 95%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    background-color: transparent;
+    border-radius: 0;
+    outline: none;
+}
+
+.goal-form input[type="text"]::placeholder {
+    color: #999;
+}
+
+.goal-form button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: var(--main-color);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}

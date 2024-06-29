@@ -7,6 +7,7 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@5.9.0/main.min.js'></script>
     <link rel="stylesheet" href="{% static 'css/journal/daily_log.css' %}">
+    <link rel="stylesheet" href="{% static 'css/journal/calendar.css' %}">
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar');
@@ -33,22 +34,25 @@
 
     <div class="content">
         <div class="achievement-section">
-            <p>📒 성취 일지를 작성하여 당신의 내면 성장을 기록해보세요.</p>
+            <p class="info-title">📒 성취 일지를 작성하여 당신의 내면 성장을 기록해보세요.</p>
             <div id='calendar'></div>
         </div>
         <div class="praise-section">
-            <p> 😘 감사하고 긍정적인 마음으로 하루를 마무리해봐요.</p>
+            <p class="info-title"> 😘 감사하고 긍정적인 마음으로 하루를 마무리해봐요.</p>
             <form method="post" action="">
                 {% csrf_token %}
-                {{ praise_form.as_p }}
-                <button type="submit">Add Praise</button>
+                {{ praise_form.content }}
             </form>
-            <ul>
+            <ul class="praise-list">
                 {% for praise in praises %}
-                    <li>{{ praise.content }}
-                        <form method="post" action="{% url 'delete_praise' praise.id %}"
-                              style="display:inline;">{% csrf_token %}
-                            <button type="submit">X</button>
+                    <li class="praise-item">
+                        {{ praise.content }}
+                        <form method="post" action="{% url 'delete_praise' praise.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="delete-button">
+                                <img src="{% static 'images/x-icon.svg' %}" alt="Delete"
+                                     style="width: 16px; height: 16px;">
+                            </button>
                         </form>
                     </li>
                 {% endfor %}
@@ -56,13 +60,20 @@
         </div>
     </div>
 </div>
-<footer>
-    <ul>
-        <li><a href="#" id="goal-link"><img src="{% static 'images/home.svg' %}" alt="Goal" id="goal-icon"></a></li>
-        <li><a href="#" id="home-link"><img src="{% static 'images/journal-active.svg' %}" alt="Home" id="home-icon"></a></li>
-        <li><a href="#" id="journal-link"><img src="{% static 'images/goal.svg' %}" alt="Journal" id="journal-icon"></a></li>
-        <li><a href="#" id="board-link"><img src="{% static 'images/board.svg' %}" alt="Board" id="board-icon"></a></li>
-    </ul>
-</footer>
+{% block content %}{% endblock %}
+{% include './achievement_footer.html' %}
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const praiseInput = document.getElementById('id_content');
+        const praiseForm = praiseInput.closest('form');
+
+        praiseInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                praiseForm.submit();
+            }
+        });
+    });
+</script>
 </html>

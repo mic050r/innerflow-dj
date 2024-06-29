@@ -1,10 +1,29 @@
 @import url('../public.css');
 
-header nav ul {
-    padding: 0;
-    margin: 0;
+.container {
+    margin-top: 3%;
+    width: 100%;
     display: flex;
-    justify-content: left;
+    flex-direction: column;
+    align-items: center;
+}
+
+h2 {
+    color: #333;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.date {
+    color: var(--gray1);
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+
+.content {
+    font-size: 15px;
+    margin-bottom: 20px;
+    color: var(--gray2);
 }
 
 main {
@@ -13,111 +32,139 @@ main {
     margin: 0 auto;
 }
 
-/* 게시판 디테일 섹션 스타일 */
-main h2 {
-    margin-top: 0;
+.right-content {
+    display: flex;
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    gap: 10px; /* 버튼 간격 추가 */
+    margin-top: 20px; /* 위쪽 간격 추가 */
+    font-size: 14px;
 }
 
-main p {
-    margin: 10px 0;
+.right-content .btn {
+    color: var(--main-color);
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    text-decoration: none; /* 링크의 밑줄 제거 */
 }
 
-main p:first-of-type {
-    font-size: 1.2em;
-    font-weight: bold;
-}
-
-main p:nth-of-type(2) {
-    color: #555;
-}
-
-form {
+.right-content .delete-form {
     display: inline;
 }
 
-form button {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    margin-left: 10px;
-}
-
-form button:hover {
-    background-color: #d32f2f;
+.right-content .delete-form .btn {
+    background-color: var(--white);
+    transition: background-color 0.3s;
 }
 
 /* 댓글 섹션 스타일 */
 hr {
-    border: 1px solid #ddd;
+    border: none;
+    border-top: 1px solid #ddd;
     margin: 20px 0;
 }
 
-h3 {
+.comments {
+    font-size: 15px;
     margin-bottom: 10px;
 }
 
-form {
-    margin-bottom: 20px;
+.comments-list {
+    list-style: none;
+    padding: 1%;
 }
 
-form input, form textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+.comment-item {
+    padding: 5px;
+    border-bottom: 1px solid var(--secondary-color);
+    background-color: var(--third-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2%;
 }
 
-form button[type="submit"] {
-    color: white;
+.comment-item:last-child {
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+.comment-item form {
+    margin: 0;
+}
+
+.comment-edit {
+    color: var(--main-color);
     border: none;
-    padding: 10px 20px;
+    padding: 10px;
     cursor: pointer;
     border-radius: 5px;
+    text-decoration: none; /* 링크의 밑줄 제거 */
 }
 
-form button[type="submit"]:hover {
-    background-color: #45a049;
-}
-
-/* 댓글 목록 스타일 */
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-ul li {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-}
-
-ul li a {
-    color: #2196F3;
-    text-decoration: none;
-    margin-right: 10px;
-}
-
-ul li a:hover {
-    text-decoration: underline;
-}
-
-ul li form {
-    display: inline;
-}
-
-ul li form button {
-    color: black;
+.comment-delete {
+    background-color: var(--third-color);
+    color: var(--main-color);
     border: none;
     padding: 5px 10px;
     cursor: pointer;
     border-radius: 5px;
+    transition: background-color 0.3s;
 }
 
-ul li form button:hover {
-    background-color: #d32f2f;
+.comment-form {
+    display: flex;
+    position: relative; /* 부모 요소에 상대 위치 지정 */
+}
+
+.comment-text {
+    font-size: 15px;
+}
+
+.comment-form textarea {
+    resize: vertical;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    height: 25px; /* 텍스트 영역 높이 조정 */
+    width: 100%; /* 텍스트 영역 너비 조정 */
+}
+
+.comment-form button.save-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    position: absolute; /* 절대 위치 지정 */
+    right: 10px; /* 오른쪽에 배치 */
+    top: 10px; /* 텍스트 영역의 위쪽에 배치 */
+}
+
+.comment-form button.save-button img {
+    width: 30px; /* 이미지 크기 조정 */
+    height: 30px;
+}
+
+.left-comment {
+    display: flex;
+    align-items: center;
+}
+
+.left-comment img {
+    width: 24px; /* 이미지 크기 조정 */
+    height: 24px;
+    margin-right: 10px;
+}
+
+.right-comment {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 간격 추가 */
+    font-size: 15px;
+}
+
+.right-comment a,
+.right-comment form {
+    display: inline-block;
 }
