@@ -15,7 +15,7 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ['comment']
         widgets = {
-            'comment': forms.Textarea(attrs={'placeholder': '댓글을 입력해주세요'}),
+            'comment': forms.Textarea(attrs={'placeholder': '답변하기'}),
         }
 
 class GoalForm(forms.ModelForm):
