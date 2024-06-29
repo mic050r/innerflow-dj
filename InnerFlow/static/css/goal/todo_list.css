@@ -29,16 +29,20 @@ h2 {
 
 .goal-content {
     align-content: center;
-    justify-content: center;
     height: 50px;
     width: 970px;
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.goal-title {
+    margin-left: 10px;
 }
 
 .progress-info {
@@ -64,11 +68,11 @@ h2 {
 }
 
 .percentage {
-    font-size: 14px;
-}
-
-.num, .percentage {
-    font-size: 14px;
+    font-size: 20px;
+    margin-left: 10px;
+    margin-right: 9px;
+    font-weight: 600;
+    color: var(--main-color);
 }
 
 .todo-list {
@@ -100,6 +104,11 @@ h2 {
     margin-left: 10px;
 }
 
+.left-content span.checked {
+    text-decoration: line-through;
+    color: #999;
+}
+
 .right-content a {
     margin-right: 10px;
     text-decoration: none;
@@ -121,7 +130,6 @@ h2 {
     border-radius: 4px;
 }
 
-
 .input-container {
     display: flex;
     align-items: center;
@@ -129,15 +137,20 @@ h2 {
     position: relative;
     width: 850px;
 }
-
 .input-container input {
     width: 80%;
     height: 35px;
     padding: 10px 40px 10px 10px;
-    border: none;
+    border: 1px solid var(--third-color);
     border-radius: 8px;
     background-color: var(--third-color);
     font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.input-container input:focus {
+    border-color: var(--secondary-color);
+    outline: none;
 }
 
 .input-container input::placeholder {
