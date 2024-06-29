@@ -33,30 +33,47 @@
 
     <div class="content">
         <div class="achievement-section">
-            <p>📒 성취 일지를 작성하여 당신의 내면 성장을 기록해보세요.</p>
+            <p class="info-title">📒 성취 일지를 작성하여 당신의 내면 성장을 기록해보세요.</p>
             <div id='calendar'></div>
         </div>
         <div class="praise-section">
-            <p> 😘 감사하고 긍정적인 마음으로 하루를 마무리해봐요.</p>
+            <p class="info-title"> 😘 감사하고 긍정적인 마음으로 하루를 마무리해봐요.</p>
             <form method="post" action="">
                 {% csrf_token %}
-                {{ praise_form.as_p }}
-                <button type="submit">Add Praise</button>
+                {{ praise_form.content }}
             </form>
-            <ul>
+            <ul class="praise-list">
                 {% for praise in praises %}
-                    <li>{{ praise.content }}
-                        <form method="post" action="{% url 'delete_praise' praise.id %}"
-                              style="display:inline;">{% csrf_token %}
-                            <button type="submit">X</button>
+                    <li class="praise-item">{{ praise.content }}
+                        <form method="post" action="{% url 'delete_praise' praise.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="delete-button">
+                                <img src="{% static 'images/x-icon.svg' %}" alt="Delete"
+                                     style="width: 16px; height: 16px;">
+                            </button>
                         </form>
                     </li>
                 {% endfor %}
             </ul>
         </div>
+
+
     </div>
 </div>
 {% block content %}{% endblock %}
 {% include './achievement_footer.html' %}
 </body>
+<script>document.addEventListener("DOMContentLoaded", function () {
+    const praiseInput = document.getElementById('id_content');
+    const praiseForm = praiseInput.closest('form');
+
+    // Handle praise form submission with Enter key
+    praiseInput.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            praiseForm.submit();
+        }
+    });
+});
+</script>
 </html>

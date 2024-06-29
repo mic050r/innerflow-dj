@@ -71,5 +71,8 @@ class PraiseForm(forms.ModelForm):
         model = Praise
         fields = ['content']
         widgets = {
-            'content': forms.Textarea(attrs={'placeholder': '칭찬 내용을 입력해주세요'}),
+            'content': forms.TextInput(attrs={
+                'placeholder': '자신의 칭찬을 작성해주세요!',
+                'class': 'borderless-praise-input'
+            }),
         }
