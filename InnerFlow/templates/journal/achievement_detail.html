@@ -1,12 +1,15 @@
-<!-- journal/templates/journal/achievement_detail.html -->
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Achievement Detail</title>
+    <link rel="stylesheet" href="{% static 'css/journal/achievement_detail.css' %}">
 </head>
 <body>
-    <h1>{{ achievement.title }}</h1>
-    <p>{{ achievement.description }}</p>
-    <a href="{% url 'achievement_form' achievement.date %}">Edit</a>
+<h1>{{ achievement.title }}</h1>
+<p>{{ achievement.description }}</p>
+<a href="{% url 'achievement_form' achievement.date %}">Edit</a>
 </body>
+{% block content %}{% endblock %}
+{% include './achievement_footer.html' %}
 </html>

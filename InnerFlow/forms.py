@@ -39,11 +39,31 @@ class AchievementForm(forms.ModelForm):
         model = Achievement
         fields = ['title', 'date', 'keyword', 'temperature', 'content']
         widgets = {
-            'title': forms.TextInput(attrs={'placeholder': '제목을 입력해주세요'}),
-            'date': forms.DateInput(attrs={'type': 'date'}),
-            'keyword': forms.TextInput(attrs={'placeholder': '키워드를 입력해주세요'}),
-            'temperature': forms.NumberInput(attrs={'placeholder': '온도를 입력해주세요'}),
-            'content': forms.Textarea(attrs={'placeholder': '내용을 입력해주세요'}),
+            'title': forms.TextInput(attrs={
+                'placeholder': '제목 입력',
+                'class': 'borderless-title'
+            }),
+            'date': forms.DateInput(attrs={
+                'type': 'date',
+                'class': 'borderless-date'
+            }),
+            'keyword': forms.TextInput(attrs={
+                'placeholder': '키워드를 입력해주세요',
+                'class': 'borderless-keyword'
+            }),
+            'temperature': forms.NumberInput(attrs={
+                'placeholder': '온도를 체크해주세요',
+                'type': 'range',
+                'min': '0',
+                'max': '100',
+                'step': '1',
+                'class': 'borderless-slider',
+                'oninput': 'updateTemperatureValue(this.value)'
+            }),
+            'content': forms.Textarea(attrs={
+                'placeholder': '글을 작성해주세요',
+                'class': 'borderless-content'
+            }),
         }
 
 class PraiseForm(forms.ModelForm):

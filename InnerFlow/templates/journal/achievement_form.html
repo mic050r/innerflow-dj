@@ -1,22 +1,64 @@
-<!-- journal/templates/journal/achievement_form.html -->
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Achievement Form</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="{% static 'css/journal/achievement_form.css' %}">
 </head>
 <body>
-    <h1>Achievement Form for {{ date }}</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save</button>
-    </form>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script>
-        flatpickr("input[type='date']", {
-            dateFormat: "Y-m-d",
-        });
-    </script>
+<div class="container">
+    <main>
+        <div class="form-container">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-title">
+                    {{ form.title }}
+                </div>
+                <div class="form-group">
+                    <label for="date" class="input-label">날짜</label>
+                    {{ form.date }}
+                </div>
+                <div class="form-group">
+                    <label for="keyword" class="input-label">키워드</label>
+                    {{ form.keyword }}
+                </div>
+                <div class="form-group">
+                    <label for="temperature" class="input-label">오늘의 온도</label>
+                    <div id="temperature-container">
+                        <span id="temperature-value">0</span>°C
+                        {{ form.temperature }}
+                    </div>
+                </div>
+                <div class="form-content">
+                    <p class="sub-title">💡 오늘 어떤 성과를 이루셨는지 간단하게 기록해주세요. 작은 것도 큰 것도 모두 괜찮아요!</p>
+                    {{ form.content }}
+                </div>
+                <div class="form-group">
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    flatpickr("input[type='date']", {
+        dateFormat: "Y-m-d",
+    });
+
+    function updateTemperatureValue(value) {
+        document.getElementById('temperature-value').textContent = value;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const temperatureInput = document.querySelector('input[type="range"]');
+        updateTemperatureValue(temperatureInput.value);
+    });
+</script>
 </body>
+{% block content %}{% endblock %}
+{% include './achievement_footer.html' %}
 </html>
