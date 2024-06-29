@@ -97,15 +97,46 @@
     width: 80%;
 }
 
-.right-content ul {
+.board-list {
     list-style: none;
     padding: 0;
     border-top: 1px solid var(--gray4); /* 리스트 항목의 선을 맨 처음부터 나오게 설정 */
 }
 
-.right-content li {
+.board-item {
+    height: 135px;
     border-bottom: 1px solid var(--gray4);
+    align-content: center;
+    justify-content: center;
     padding: 10px 0;
+    cursor: pointer;
+}
+
+.board-item h4 {
+    margin: 0 0 5px 0;
+    font-size: 1.2em;
+    color: var(--main-color);
+}
+
+.board-item p {
+    margin: 0 0 5px 0;
+    color: var(--gray2);
+}
+
+.board-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 34px;
+}
+
+.comment-count {
+    margin: 0;
+    color: var(--gray3);
+}
+
+.created-date {
+    margin: 0;
+    color: var(--gray3);
 }
 
 .board-details {
