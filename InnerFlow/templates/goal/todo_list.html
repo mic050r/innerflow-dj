@@ -20,13 +20,14 @@
         </div>
     </div>
     <form method="post" class="todo-form">
-    {% csrf_token %}
-    <div class="input-container">
-        <input type="text" name="todo" placeholder="목표에 맞는 세부적인 할 일을 작성해주세요!" required>
-        <button type="submit"><img src="{% static 'images/plus-icon-main.svg' %}" alt="Add"></button>
-    </div>
-</form>
+        {% csrf_token %}
+        <div class="input-container">
+            <input type="text" name="todo" placeholder="목표에 맞는 세부적인 할 일을 작성해주세요!" required>
+            <button type="submit"><img src="{% static 'images/plus-icon-main.svg' %}" alt="Add"></button>
+        </div>
+    </form>
     <ul class="todo-list">
+        <div class="todo-num">{{ completed_todos }}/{{ total_todos }}</div>
         {% for todo in todos %}
             <li class="todo-item">
                 <div class="left-content">
@@ -35,13 +36,21 @@
                     <span>{{ todo.todo }}</span>
                 </div>
                 <div class="right-content">
-                    <a href="{% url 'todo_update' todo.todo_id %}">Edit</a>
-                    <a href="{% url 'todo_delete' todo.todo_id %}">Delete</a>
+                    <a href="{% url 'todo_update' todo.todo_id %}">
+                        <img src="{% static 'images/todo-edit-icon.svg' %}" alt="Edit"
+                             style="width: 16px; height: 16px;">
+                    </a>
+                    <a href="{% url 'todo_delete' todo.todo_id %}">
+                        <img src="{% static 'images/todo-delete-icon.svg' %}" alt="Delete"
+                             style="width: 16px; height: 16px;">
+                    </a>
                 </div>
             </li>
         {% endfor %}
     </ul>
 </div>
+{% block content %}{% endblock %}
+{% include './goal_footer.html' %}
 <script>
     function updateChecked(todoId, checked) {
         fetch(`/todo/${todoId}/update_checked/`, {

@@ -10,12 +10,8 @@
 }
 
 /* top */
-.title {
-    font-size: 30px;
-}
-
 .sub-title {
-    font-size: 20px;
+    font-size: 18px;
     color: var(--gray3);
 }
 

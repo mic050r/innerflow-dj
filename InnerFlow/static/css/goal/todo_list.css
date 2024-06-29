@@ -6,6 +6,10 @@
     background-color: #fff;
     border-radius: 10px;
     padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 h2 {
@@ -27,6 +31,7 @@ h2 {
     align-content: center;
     justify-content: center;
     height: 50px;
+    width: 970px;
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 10px;
@@ -67,8 +72,11 @@ h2 {
 }
 
 .todo-list {
+    align-items: center;
+    justify-content: center;
     list-style-type: none;
     padding: 0;
+    width: 600px;
     margin: 20px 0;
 }
 
@@ -93,12 +101,12 @@ h2 {
 }
 
 .right-content a {
-    margin-left: 10px;
+    margin-right: 10px;
     text-decoration: none;
 }
 
-.right-content a:hover {
-    text-decoration: underline;
+.right-content img {
+    vertical-align: middle;
 }
 
 .todo-form {
@@ -119,14 +127,13 @@ h2 {
     align-items: center;
     justify-content: center;
     position: relative;
-    width: 100%;
-
+    width: 850px;
 }
 
 .input-container input {
     width: 80%;
     height: 35px;
-    padding: 10px 40px 10px 10px; /* Adjust padding for placeholder */
+    padding: 10px 40px 10px 10px;
     border: none;
     border-radius: 8px;
     background-color: var(--third-color);
@@ -155,4 +162,9 @@ h2 {
     border: none;
     padding: 0;
     cursor: pointer;
+}
+
+.todo-num {
+    padding: 4px;
+    text-align: right;
 }

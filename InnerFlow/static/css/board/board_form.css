@@ -61,6 +61,10 @@ form .title-input {
     font-size: 2rem; /* 제목 입력의 폰트 크기 증가 */
 }
 
+form .content-input {
+    font-size: 18px;
+}
+
 .button-group {
     display: flex;
     justify-content: flex-end; /* 버튼을 오른쪽에 정렬 */

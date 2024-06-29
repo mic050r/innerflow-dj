@@ -16,7 +16,7 @@
 }
 
 .fc-button:hover {
-     background-color: var(--main-color);
+    background-color: var(--main-color);
 }
 
 .fc-daygrid-day-number {
@@ -28,14 +28,14 @@
 }
 
 .fc-daygrid-event {
-     background-color: var(--main-color);
+    background-color: var(--main-color);
     color: white;
     border: none;
-    height: 30px;
+    height: 27px;
     align-content: center;
     padding: 8px;
 }
 
 .fc-event:hover {
-     background-color: var(--main-color);
+    background-color: var(--main-color);
 }

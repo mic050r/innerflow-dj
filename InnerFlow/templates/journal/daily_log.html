@@ -45,7 +45,8 @@
             </form>
             <ul class="praise-list">
                 {% for praise in praises %}
-                    <li class="praise-item">{{ praise.content }}
+                    <li class="praise-item">
+                        {{ praise.content }}
                         <form method="post" action="{% url 'delete_praise' praise.id %}" style="display:inline;">
                             {% csrf_token %}
                             <button type="submit" class="delete-button">
@@ -62,16 +63,17 @@
 {% block content %}{% endblock %}
 {% include './achievement_footer.html' %}
 </body>
-<script>document.addEventListener("DOMContentLoaded", function () {
-    const praiseInput = document.getElementById('id_content');
-    const praiseForm = praiseInput.closest('form');
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const praiseInput = document.getElementById('id_content');
+        const praiseForm = praiseInput.closest('form');
 
-    praiseInput.addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            praiseForm.submit();
-        }
+        praiseInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                praiseForm.submit();
+            }
+        });
     });
-});
 </script>
 </html>

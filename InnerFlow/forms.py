@@ -1,14 +1,16 @@
 from django import forms
 from .models import Board, Comment, Goal, Todo, Achievement, Praise
 
+
 class BoardForm(forms.ModelForm):
     class Meta:
         model = Board
         fields = ['title', 'content']
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': '제목 입력', 'class': 'title-input'}),
-            'content': forms.Textarea(attrs={'placeholder': '글을 작성해주세요'}),
+            'content': forms.Textarea(attrs={'placeholder': '글을 작성해주세요', 'class': 'content-input'}),
         }
+
 
 class CommentForm(forms.ModelForm):
     class Meta:
@@ -18,6 +20,7 @@ class CommentForm(forms.ModelForm):
             'comment': forms.Textarea(attrs={'placeholder': '답변하기'}),
         }
 
+
 class GoalForm(forms.ModelForm):
     class Meta:
         model = Goal
@@ -26,6 +29,7 @@ class GoalForm(forms.ModelForm):
             'goal': forms.TextInput(attrs={'placeholder': '목표를 입력해주세요'}),
         }
 
+
 class TodoForm(forms.ModelForm):
     class Meta:
         model = Todo
@@ -33,6 +37,7 @@ class TodoForm(forms.ModelForm):
         widgets = {
             'todo': forms.TextInput(attrs={'placeholder': '할 일을 입력해주세요'}),
         }
+
 
 class AchievementForm(forms.ModelForm):
     class Meta:
@@ -65,6 +70,7 @@ class AchievementForm(forms.ModelForm):
                 'class': 'borderless-content'
             }),
         }
+
 
 class PraiseForm(forms.ModelForm):
     class Meta:
