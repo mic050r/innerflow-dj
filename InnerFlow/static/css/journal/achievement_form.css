@@ -1,0 +1,137 @@
+@import url('../public.css');
+
+.container {
+    margin-top: 3%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-container {
+    width: 800px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.input-label {
+    color: #808080;
+    flex-basis: 15%;
+    text-align: left;
+}
+
+input[type="text"],
+input[type="date"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 16px; /* Increased font size */
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+button[type="submit"] {
+    padding: 10px;
+    background-color: var(--main-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    font-size: 16px; /* Ensure button text is also readable */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: auto;
+}
+
+p {
+    font-size: 14px;
+    color: #666;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.form-title {
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: left;
+    font-size: 18px; /* Increased font size */
+}
+
+.borderless-title {
+    font-size: 40px;
+}
+
+.sub-title {
+    width: 100%;
+    height: 60px;
+    align-content: center;
+    justify-content: center;
+    text-align: left;
+    margin-bottom: 1%;
+    border: 1px solid #DDDDDD; /* 헤더에 테두리 추가 */
+    border-radius: 5px;
+    box-sizing: border-box; /* 패딩과 테두리를 포함한 너비 설정 */
+    color: var(--main-color);
+    padding-left: 15px;
+    font-size: 16px;
+}
+
+
+input.borderless-date,
+input.borderless-keyword,
+input.borderless-temperature {
+    padding: 0;
+    margin: 0;
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+
+input.borderless-title {
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+    border: none;
+    outline: none;
+    font-size: 30px;
+}
+
+textarea.borderless-content {
+    padding: 0;
+    margin: 0;
+    margin-top: 14px;
+    border: none;
+    outline: none;
+    font-size: 18px;
+}
+
+.borderless-slider {
+    width: 100%;
+    margin: 0 10px;
+    border: none;
+    outline: none;
+}
+
+#temperature-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+#temperature-value {
+    font-size: 16px;
+    margin-right: 10px;
+    color: #333;
+}

@@ -52,34 +52,57 @@ form {
     margin: 20px 0;
 }
 
-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
+.delete-button {
+    background: none;
     border: none;
-    border-radius: 5px;
+    padding: 0;
     cursor: pointer;
 }
 
-button:hover {
-    background-color: #45a049;
+.delete-button img {
+    width: 25px;
+    height: 25px;
+    display: block;
 }
 
-ul {
+.praise-list {
     list-style-type: none;
     padding: 0;
 }
 
-li {
+.praise-item {
     margin: 10px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid #ccc; /* Add a bottom border */
+    padding-bottom: 10px; /* Optional: Add some padding to space out the content from the border */
 }
 
-li form {
+
+.praise-item form {
     margin: 0;
 }
 
+.info-title {
+    font-weight: bolder;
+    margin-bottom: 4px;
+    color: var(--main-color);
+}
 
+input[name="content"] {
+    border: 1px solid var(--third-color);
+    background-color: var(--third-color);
+    border-radius: 20px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+    color: #333;
+}
 
+input[name="content"]:focus {
+    border-color: var(--main-color);
+    outline: none;
+}

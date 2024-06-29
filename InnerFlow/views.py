@@ -29,11 +29,42 @@ load_dotenv()
 def index(request):
     return render(request, 'index.html')
 
+
 def home(request):
+    kakao_id = request.session.get('kakao_id')
+    kakao_nickname = request.session.get('kakao_nickname')
+
     with open('./InnerFlow/static/data/info.json', 'r', encoding='utf-8') as file:
         data = json.load(file)
     print(data)
-    return render(request, 'home.html', {'data': json.dumps(data)})
+
+    # 업적 데이터 가져오기
+    achievements = Achievement.objects.filter(user__kakao_id=kakao_id)
+    keywords = []
+    for achievement in achievements:
+        keywords.extend(achievement.keyword.split('/'))
+
+    # 목표 데이터 가져오기 (최신순으로 3개)
+    goals = Goal.objects.filter(user__kakao_id=kakao_id).order_by('-created_at')[:3]
+    goal_stats = []
+    for goal in goals:
+        todos = Todo.objects.filter(goal=goal)
+        total_todos = todos.count()
+        completed_todos = todos.filter(checked=True).count()
+        completion_rate = (completed_todos / total_todos) * 100 if total_todos > 0 else 0
+        goal_stats.append({
+            'goal': goal,
+            'total_todos': total_todos,
+            'completed_todos': completed_todos,
+            'completion_rate': completion_rate,
+        })
+
+    return render(request, 'home.html', {
+        'data': json.dumps(data),  # 기존의 data 추가
+        'keywords': keywords,
+        'goal_stats': goal_stats,
+        'nickname': kakao_nickname
+    })
 
 
 # 카카오 로그인 페이지로 리다이렉트하는 함수
@@ -103,6 +134,7 @@ def kakao_callback(request):
         request.session['access_token'] = str(access)
         request.session['refresh_token'] = str(refresh)
         request.session['kakao_id'] = str(kakao_id)
+        request.session['kakao_nickname']  = str(kakao_nickname)
         print(request.session.get('kakao_id'))
 
         return redirect('/home/')  # 로그인 성공 후 /home으로 리다이렉트
@@ -125,7 +157,7 @@ def board_list(request):
         boards = Board.objects.filter(Q(title__icontains=query) | Q(content__icontains=query))
     else:
         boards = Board.objects.all()
-    return render(request, 'board_list.html', {'boards': boards})
+    return render(request, 'board/board_list.html', {'boards': boards})
 
 
 def board_detail(request, board_id):
@@ -142,7 +174,7 @@ def board_detail(request, board_id):
     else:
         form = CommentForm()
 
-    return render(request, 'board_detail.html', {
+    return render(request, 'board/board_detail.html', {
         'board': board,
         'comments': comments,
         'form': form
@@ -159,7 +191,7 @@ def board_filter(request, filter_type):
     else:
         boards = Board.objects.all()
 
-    return render(request, 'board_list.html', {'boards': boards})
+    return render(request, 'board/board_list.html', {'boards': boards})
    
 def board_create(request):
     if request.method == 'POST':
@@ -179,7 +211,7 @@ def board_create(request):
                 return HttpResponse("Error: User not found")
     else:
         form = BoardForm()
-    return render(request, 'board_form.html', {'form': form})
+    return render(request, 'board/board_form.html', {'form': form})
 
    
 def board_update(request, board_id):
@@ -197,7 +229,7 @@ def board_update(request, board_id):
             return redirect('board_detail', board_id=board.board_id)
     else:
         form = BoardForm(instance=board)
-    return render(request, 'board_form.html', {'form': form})
+    return render(request, 'board/board_form.html', {'form': form})
 
    
 def board_delete(request, board_id):
@@ -209,7 +241,7 @@ def board_delete(request, board_id):
     if request.method == 'POST':
         board.delete()
         return redirect('board_list')
-    return render(request, 'board_confirm_delete.html', {'board': board})
+    return render(request, 'board/board_confirm_delete.html', {'board': board})
 
    
 def comment_create(request, board_id):
@@ -232,7 +264,7 @@ def comment_create(request, board_id):
                 return HttpResponse("Error: User not found")
     else:
         form = CommentForm()
-    return render(request, 'comment_form.html', {'form': form})
+    return render(request, 'board/comment_form.html', {'form': form})
 
    
 def comment_update(request, comment_id):
@@ -248,7 +280,7 @@ def comment_update(request, comment_id):
             return redirect('board_detail', board_id=comment.board.board_id)
     else:
         form = CommentForm(instance=comment)
-    return render(request, 'comment_form.html', {'form': form})
+    return render(request, 'board/comment_form.html', {'form': form})
 
    
 def comment_delete(request, comment_id):
@@ -260,7 +292,7 @@ def comment_delete(request, comment_id):
     if request.method == 'POST':
         comment.delete()
         return redirect('board_detail', board_id=comment.board.board_id)
-    return render(request, 'comment_confirm_delete.html', {'comment': comment})
+    return render(request, 'board/comment_confirm_delete.html', {'comment': comment})
 
  
 def goal_list(request):
@@ -317,11 +349,18 @@ def goal_delete(request, goal_id):
         goal.delete()
         return redirect('goal_list')
     return render(request, 'goal/goal_confirm_delete.html', {'goal': goal})
- 
+
+
 def todo_list(request, goal_id):
     kakao_id = request.session.get('kakao_id')
     goal = get_object_or_404(Goal, pk=goal_id, user__kakao_id=kakao_id)
     todos = Todo.objects.filter(goal=goal)
+
+    # 목표 진행 상황 계산
+    total_todos = todos.count()
+    completed_todos = todos.filter(checked=True).count()
+    completion_rate = (completed_todos / total_todos) * 100 if total_todos > 0 else 0
+
     if request.method == 'POST':
         form = TodoForm(request.POST)
         if form.is_valid():
@@ -331,9 +370,17 @@ def todo_list(request, goal_id):
             return redirect('todo_list', goal_id=goal_id)
     else:
         form = TodoForm()
-    return render(request, 'goal/todo_list.html', {'goal': goal, 'todos': todos, 'form': form})
 
- 
+    return render(request, 'goal/todo_list.html', {
+        'goal': goal,
+        'todos': todos,
+        'form': form,
+        'total_todos': total_todos,
+        'completed_todos': completed_todos,
+        'completion_rate': round(completion_rate),
+    })
+
+
 def todo_update(request, todo_id):
     kakao_id = request.session.get('kakao_id')
     todo = get_object_or_404(Todo, pk=todo_id, goal__user__kakao_id=kakao_id)

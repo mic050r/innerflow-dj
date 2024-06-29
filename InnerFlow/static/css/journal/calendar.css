@@ -1,0 +1,41 @@
+/* FullCalendar 커스텀하기 */
+@import url('../public.css');
+
+.fc {
+    font-family: var(--main-font);
+}
+
+.fc-toolbar {
+    font-size: 13px;
+}
+
+.fc-button {
+    background-color: var(--main-color);
+    color: white;
+    border: none;
+}
+
+.fc-button:hover {
+     background-color: var(--main-color);
+}
+
+.fc-daygrid-day-number {
+    color: var(--black);
+}
+
+.fc-day-today {
+    background-color: #F4F1FE !important;
+}
+
+.fc-daygrid-event {
+     background-color: var(--main-color);
+    color: white;
+    border: none;
+    height: 30px;
+    align-content: center;
+    padding: 8px;
+}
+
+.fc-event:hover {
+     background-color: var(--main-color);
+}

@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Site</title>
+    <link rel="stylesheet" href="{% static 'css/board/board_detail.css' %}">
+</head>
+<body>
+<div class="container">
+    <main>
+        <h2>{{ board.title }}</h2>
+        <p class="date">{{ board.created_at|date:"Y.m.d a h:i" }}</p>
+        <p class="content">{{ board.content }}</p>
+        <div class="right-content">
+            <a href="{% url 'board_update' board.board_id %}" class="btn">Edit</a>
+            <form action="{% url 'board_delete' board.board_id %}" method="post" class="delete-form">
+                {% csrf_token %}
+                <button type="submit" class="btn">Delete</button>
+            </form>
+        </div>
+        <hr>
+        <p class="comments">답변 수 : {{ comments|length }}</p> <!-- 답변 수 표시 -->
+        <div class="comment">
+            <form method="post" action="{% url 'comment_create' board.board_id %}" class="comment-form">
+                {% csrf_token %}
+                {{ form.comment }}
+                <button type="submit" class="save-button">
+                    <img src="{% static 'images/comment-save-icon.svg' %}" alt="Save"> <!-- 이미지로 변경된 저장 버튼 -->
+                </button>
+            </form>
+        </div>
+        <ul class="comments-list">
+    {% for comment in comments %}
+        <li class="comment-item">
+            <div class="left-comment">
+                <img src="{% static 'images/comment-right-arrow.svg' %}" alt="Arrow">
+                <span class="comment-text">{{ comment.comment }}</span>
+            </div>
+            <div class="right-comment">
+                <a href="{% url 'comment_update' comment.comment_id %}" class="comment-edit">수정</a>
+                <form action="{% url 'comment_delete' comment.comment_id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="comment-delete">삭제</button>
+                </form>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+
+    </main>
+</div>
+{% block content %}{% endblock %}
+{% include './board_footer.html' %}
+</body>
+</html>

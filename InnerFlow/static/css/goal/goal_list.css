@@ -81,7 +81,7 @@
 }
 
 .progress {
-    background-color: #76c7c0;
+    background-color: var(--main-color);
     height: 100%;
     border-radius: 5px;
 }
