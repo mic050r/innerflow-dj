@@ -26,9 +26,29 @@
     padding-left: 2%;
 }
 
-.search-filter input[type="text"] {
-    margin-bottom: 10px;
-    padding: 5px;
+.search-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    padding: 10px 10px 10px 40px;
+    border-radius: 20px;
+    border: 1px solid var(--gray4);
+    width: 100%;
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    width: 18px;
+    height: 18px;
 }
 
 .search-filter a {
@@ -47,7 +67,7 @@
 }
 
 .search-filter .btn {
-    width: 80%;
+    width: 100%;
     height: 30px; /* 높이 설정 */
     background-color: var(--main-color);
     color: var(--white);
@@ -69,6 +89,7 @@
     padding-bottom: 3px; /* 텍스트와 밑줄 사이의 간격 조정 */
     font-weight: bold;
     color: var(--main-color);
+
 }
 
 .search-filter a.active::after {
@@ -81,6 +102,13 @@
     background-color: var(--main-color); /* 밑줄 색상 */
     width: 100%;
     transform: translateY(1px); /* 밑줄을 텍스트에서 조금 떨어지게 */
+}
+
+.board-tag {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5%;
 }
 
 .content {

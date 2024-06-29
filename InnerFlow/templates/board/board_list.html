@@ -18,13 +18,21 @@
     <div class="content">
         <div class="left-content">
             <div class="search-filter">
-                <form method="get" action="{% url 'board_list' %}">
-                    <img src="" alt="">
-                    <input type="text" name="q" placeholder="질문 검색" value="{{ request.GET.q }}">
+                <form method="get" action="{% url 'board_list' %}" class="search-form">
+                    <div class="search-input-container">
+                        <img src="{% static 'images/search-icon.svg' %}" alt="Search Icon" class="search-icon">
+                        <input type="text" name="q" placeholder="질문 검색" value="{{ request.GET.q }}"
+                               class="search-input">
+                    </div>
                 </form>
-                <a href="{% url 'board_filter' 'all' %}" class="{% if request.path == '/boards/filter/all/' %}active{% endif %}">전체</a>
-                <a href="{% url 'board_filter' 'waiting' %}" class="{% if request.path == '/boards/filter/waiting/' %}active{% endif %}">답변을 기다리는 질문</a>
-                <a href="{% url 'board_filter' 'my_posts' %}" class="{% if request.path == '/boards/filter/my_posts/' %}active{% endif %}">내 게시글</a>
+                <div class="board-tag">
+                    <a href="{% url 'board_filter' 'all' %}"
+                       class="{% if request.path == '/boards/filter/all/' %}active{% endif %}">전체</a>
+                    <a href="{% url 'board_filter' 'waiting' %}"
+                       class="{% if request.path == '/boards/filter/waiting/' %}active{% endif %}">답변을 기다리는 질문</a>
+                    <a href="{% url 'board_filter' 'my_posts' %}"
+                       class="{% if request.path == '/boards/filter/my_posts/' %}active{% endif %}">내 게시글</a>
+                </div>
                 <a href="{% url 'board_create' %}" class="btn">글 작성하기</a>
             </div>
         </div>
