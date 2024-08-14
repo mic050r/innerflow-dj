@@ -1,14 +1,16 @@
 import os
-from urllib.parse import urlencode
-
+import logging
 import requests
+
+from urllib.parse import urlencode
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from dotenv import load_dotenv
 from rest_framework_simplejwt.tokens import RefreshToken
-
 from InnerFlow.models import User
 
+# 로거 인스턴스를 생성
+logger = logging.getLogger(__name__)
 load_dotenv()
 
 
@@ -61,7 +63,9 @@ def kakao_callback(request):
         headers = {'Authorization': f'Bearer {access_token}'}
         profile_response = requests.get(kakao_profile_url, headers=headers)
         profile = profile_response.json()
+
         print(profile)  # 사용자 정보를 출력
+        logger.info(profile)
 
         kakao_id = profile["id"]
         kakao_nickname = profile["properties"]["nickname"]
@@ -85,6 +89,7 @@ def kakao_callback(request):
         return redirect('/home/')  # 로그인 성공 후 /home으로 리다이렉트
 
     except KeyError as e:
+        logger.error(str(e))
         return HttpResponse(f"Error: {str(e)}")  # 예외 발생 시 에러 메시지 반환
 
 
