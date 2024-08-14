@@ -16,12 +16,13 @@ load_dotenv()
 
 # 카카오 로그인 페이지로 리다이렉트하는 함수
 def kakao_login(request):
-    kakao_redirect_uri = 'http://localhost:8000/kakao/login/callback/'
-    KAKAO_APP_KEY = os.getenv('KAKAO_APP_KEY')  # 환경 변수에서 애플리케이션 키를 불러오기
+    # env에서 애플리케이션 키 불러오기
+    KAKAO_REDIRECT_URL = os.getenv('KAKAO_REDIRECT_URL')
+    KAKAO_APP_KEY = os.getenv('KAKAO_APP_KEY')
 
     # 카카오 인증 페이지로 리다이렉트
     return redirect(
-        f'https://kauth.kakao.com/oauth/authorize?client_id={KAKAO_APP_KEY}&redirect_uri={kakao_redirect_uri}&response_type=code'
+        f'https://kauth.kakao.com/oauth/authorize?client_id={KAKAO_APP_KEY}&redirect_uri={KAKAO_REDIRECT_URL}&response_type=code'
     )
 
 
@@ -40,7 +41,7 @@ def kakao_callback(request):
         'grant_type': 'authorization_code',
         'client_id': os.getenv('KAKAO_APP_KEY'),  # 환경 변수에서 클라이언트 ID를 불러오기
         'client_secret': os.getenv('KAKAO_CLIENT_SECRET'),  # 환경 변수에서 클라이언트 시크릿을 불러오기
-        'redirect_uri': 'http://localhost:8000/kakao/login/callback/',
+        'redirect_uri': os.getenv('KAKAO_REDIRECT_URL'),
         'code': code,
     }
 
